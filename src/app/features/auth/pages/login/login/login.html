@@ -4,7 +4,8 @@
     <h2 class="text-3xl font-black text-center mb-2">¡Hola de <span class="text-pink-400">nuevo</span>!</h2>
     <p class="text-slate-400 text-center text-sm mb-8">Ingresa tus credenciales para acceder</p>
 
-    <form (ngSubmit)="onLogin()" class="flex flex-col gap-5">
+    <form (ngSubmit)="onLogin()" autocomplete="off" class="flex flex-col gap-5">
+      
       <div>
         <label class="block text-sm font-medium text-slate-300 mb-2">Correo Electrónico</label>
         <input 
@@ -12,6 +13,7 @@
           [(ngModel)]="email" 
           name="email" 
           required
+          autocomplete="new-password"
           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500 transition"
           placeholder="ejemplo@correo.com">
       </div>
@@ -23,6 +25,7 @@
           [(ngModel)]="password" 
           name="password" 
           required
+          autocomplete="new-password"
           class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500 transition"
           placeholder="••••••••">
       </div>
