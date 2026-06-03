@@ -8,4 +8,6 @@ import { RouterModule } from '@angular/router'; // Importante para los routerLin
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
-export class Navbar {}
+export class NavbarComponent {
+authService: any;
+}

@@ -1,0 +1,41 @@
+<section class="min-h-screen bg-slate-950 text-white flex flex-col justify-center items-center px-4">
+  <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl w-full max-w-md shadow-2xl">
+    
+    <h2 class="text-3xl font-black text-center mb-2">¡Hola de <span class="text-pink-400">nuevo</span>!</h2>
+    <p class="text-slate-400 text-center text-sm mb-8">Ingresa tus credenciales para acceder</p>
+
+    <form (ngSubmit)="onLogin()" class="flex flex-col gap-5">
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-2">Correo Electrónico</label>
+        <input 
+          type="email" 
+          [(ngModel)]="email" 
+          name="email" 
+          required
+          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500 transition"
+          placeholder="ejemplo@correo.com">
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-slate-300 mb-2">Contraseña</label>
+        <input 
+          type="password" 
+          [(ngModel)]="password" 
+          name="password" 
+          required
+          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-pink-500 transition"
+          placeholder="••••••••">
+      </div>
+
+      <button 
+        type="submit" 
+        class="w-full bg-pink-500 hover:bg-pink-400 font-semibold py-3 rounded-xl shadow-lg transition duration-200 mt-4 active:scale-95">
+        Iniciar Sesión
+      </button>
+    </form>
+
+    <p class="mt-6 text-center text-sm text-slate-400">
+      ¿No tienes cuenta? <a href="#" class="text-pink-400 hover:underline">Regístrate aquí</a>
+    </p>
+  </div>
+</section>
