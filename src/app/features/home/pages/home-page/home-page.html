@@ -1,25 +1,37 @@
-<app-navbar></app-navbar> 
+<div class="min-h-screen bg-slate-950 text-white flex flex-col">
+  <!-- Tu Header Superior -->
+  <app-header></app-header>
 
-<section class="min-h-screen bg-linear-to-br from-slate-950 via-slate-900 to-slate-800 text-white flex flex-col">
-  <div class="mx-auto flex max-w-7xl flex-col items-center justify-center px-8 py-24 text-center grow">
-    <p class="mb-4 rounded-full border border-pink-400/30 bg-pink-400/10 px-4 py-2 text-sm text-pink-300">
-      Portafolio Web Angular 21
-    </p>
-    <h2 class="max-w-4xl text-5xl font-black leading-tight md:text-7xl">
-      Creamos experiencias <span class="text-pink-400">modernas</span> para la web
-    </h2>
-    <p class="mt-8 max-w-2xl text-lg text-slate-300">
-      Somos un equipo apasionado por el desarrollo web, diseño moderno y experiencias digitales utilizando Angular, TailwindCSS y tecnologías actuales.
-    </p>
-    <div class="mt-10 flex gap-5">
-      <button routerLink="/proyectos" class="rounded-2xl bg-pink-500 px-8 py-4 font-semibold shadow-lg transition hover:scale-105 hover:bg-pink-400">
-        Ver Proyectos
-      </button>
-      <button routerLink="/contacto" class="rounded-2xl border border-white/20 bg-white/10 px-8 py-4 font-semibold backdrop-blur-md transition hover:bg-white/20">
-        Contactarnos
-      </button>
-    </div>
-  </div>
-</section>
+  <!-- El Hero Principal (Corregido el Gradiente para que no se vea blanco) -->
+  <main class="grow flex flex-col justify-center">
+    <section class="w-full bg-linear-to-br from-slate-950 via-slate-900 to-slate-800 py-24 px-8">
+      <div class="mx-auto flex max-w-7xl flex-col items-center text-center">
+        
+        <p class="mb-4 rounded-full border border-pink-400/30 bg-pink-400/10 px-4 py-2 text-sm text-pink-300 font-medium">
+          Portafolio Web Angular 21
+        </p>
+        
+        <h2 class="max-w-4xl text-5xl font-black leading-tight md:text-7xl tracking-tight">
+          Creamos experiencias <span class="text-pink-400">modernas</span> para la web
+        </h2>
+        
+        <p class="mt-8 max-w-2xl text-lg text-slate-400 leading-relaxed">
+          Somos un equipo apasionado por el desarrollo web, diseño moderno y experiencias digitales utilizando Angular, TailwindCSS y tecnologías actuales.
+        </p>
+        
+        <div class="mt-10 flex flex-wrap justify-center gap-5">
+          <button routerLink="/proyectos" class="rounded-2xl bg-pink-500 hover:bg-pink-400 px-8 py-4 font-semibold shadow-lg transition active:scale-95 cursor-pointer">
+            Ver Proyectos
+          </button>
+          <button routerLink="/contacto" class="rounded-2xl border border-slate-700 bg-slate-900/50 hover:bg-slate-800 px-8 py-4 font-semibold backdrop-blur-md transition active:scale-95 cursor-pointer">
+            Contactarnos
+          </button>
+        </div>
 
-<app-footer></app-footer>
+      </div>
+    </section>
+  </main>
+
+  <!-- Tu Footer Inferior -->
+  <app-footer></app-footer>
+</div>

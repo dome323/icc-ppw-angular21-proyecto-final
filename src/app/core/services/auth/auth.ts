@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import { initializeApp } from 'firebase/app';
-import { 
-  getAuth, 
-  signInWithEmailAndPassword, 
-  signOut, 
-  onAuthStateChanged,
-  User 
-} from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,signOut,onAuthStateChanged,User} from 'firebase/auth';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../../enviroments/environment';
 
@@ -28,6 +22,10 @@ export class AuthService {
   // Lógica para iniciar sesión
   login(email: string, pass: string) {
     return signInWithEmailAndPassword(this.auth, email, pass);
+  }
+
+  register(email: string, pass: string) {
+    return createUserWithEmailAndPassword(this.auth, email, pass);
   }
 
   // Lógica para cerrar sesión

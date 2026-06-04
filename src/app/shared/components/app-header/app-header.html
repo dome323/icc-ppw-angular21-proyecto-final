@@ -1,31 +1,33 @@
-<head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<header class="w-full bg-slate-950 border-b border-slate-800 text-white sticky top-0 z-50">
+  <div class="mx-auto max-w-7xl flex items-center justify-between px-8 py-4">
+    
+    <a routerLink="/" class="text-xl font-bold tracking-wider hover:text-pink-400 transition">
+      DevPortfolio<span class="text-pink-400">.</span>
+    </a>
 
-    <!-- SEO Meta Tags -->
-    <title>DevPortfolio Solutions - Michelle Uyunkar & Josué | Desarrolladores Web</title>
-    <meta name="description" content="Somos Michelle Uyunkar y Josué, desarrolladores apasionados por crear aplicaciones web modernas, seguras y escalables. Especialistas en Frontend, Full Stack, Angular, Node.js y más." />
-    <meta name="keywords" content="desarrolladores web, portafolio, Angular, TypeScript, Node.js, Firebase, Frontend, Full Stack, Ecuador" />
-    <meta name="author" content="Michelle Uyunkar, Josué" />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://devportfolio-solutions.web.app/" />
+    <nav class="hidden md:flex items-center gap-8">
+      <a routerLink="/" class="text-sm font-medium text-slate-300 hover:text-white transition">Inicio</a>
+      <a routerLink="/proyectos" class="text-sm font-medium text-slate-300 hover:text-white transition">Proyectos</a>
+    </nav>
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://devportfolio-solutions.web.app/" />
-    <meta property="og:title" content="DevPortfolio Solutions - Transformamos Ideas en Soluciones Digitales" />
-    <meta property="og:description" content="Michelle Uyunkar y Josué — desarrolladores especializados en aplicaciones web modernas, APIs REST, Firebase y más." />
-    <meta property="og:image" content="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1200" />
+    <div class="flex items-center gap-4">
+      @if (usuarioLogueado) {
+        <span class="text-xs text-slate-400 hidden lg:inline-block bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">
+          {{ usuarioLogueado.email }}
+        </span>
+        <button 
+          (click)="onLogout()" 
+          class="px-4 py-2 bg-red-500 hover:bg-red-400 text-white rounded-xl font-semibold text-xs transition cursor-pointer shadow-md active:scale-95">
+          Cerrar Sesión
+        </button>
+      } @else {
+        <a 
+          routerLink="/login" 
+          class="px-4 py-2 bg-pink-500 hover:bg-pink-400 text-white rounded-xl font-semibold text-xs transition cursor-pointer shadow-lg active:scale-95">
+          Ingresar
+        </a>
+      }
+    </div>
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="DevPortfolio Solutions" />
-    <meta name="twitter:description" content="Desarrolladores web profesionales: Michelle Uyunkar y Josué." />
-    <meta name="twitter:image" content="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1200" />
-
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet" />
-  </head>
+  </div>
+</header>

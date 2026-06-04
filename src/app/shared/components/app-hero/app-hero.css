@@ -1,0 +1,10 @@
+.hero {
+  border:   1px solid #d7deea;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background: #ffffff;
+}
+
+ul {
+  margin: 0.75rem 0 0;
+}

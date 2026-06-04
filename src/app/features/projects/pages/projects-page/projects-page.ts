@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { NavbarComponent } from '../../../../shared/components/navbar/navbar';
-import { FooterComponent } from '../../../../shared/components/footer/footer';
+import { FooterComponent } from '../../../../shared/components/app-footer/app-footer';
+import { HeaderComponent } from '../../../../shared/components/app-header/app-header';
 
 @Component({
   selector: 'app-projects-page',
   standalone: true,
-  imports: [RouterModule, NavbarComponent, FooterComponent],
+  imports: [RouterModule, FooterComponent, HeaderComponent],
   templateUrl: './projects-page.html',
   styleUrl: './projects-page.css'
 })
-export class ProjectsPage {}
+export class ProjectsPageComponent { }
