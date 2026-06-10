@@ -1,55 +1,71 @@
 <app-header></app-header>
 
-<section class="min-h-screen bg-slate-950 text-white px-8 py-24">
+<section class="projects-shell min-h-screen py-20 px-6 overflow-hidden">
+  <div class="projects-glow"></div>
 
-  <div class="max-w-7xl mx-auto">
+  <div class="max-w-7xl mx-auto relative">
+    <header class="projects-hero text-center mb-12">
+      <span class="projects-label">Proyectos · Portafolio Premium</span>
+      <h2 class="projects-title">Nuestros <span>Proyectos</span></h2>
+      <p class="projects-copy">
+        Interfaz holográfica con tarjetas premium, filtros tipo pills y microinteracciones suaves.
+      </p>
+      <div class="projects-meta">
+        <span class="meta-pill active">Mostrando {{ filteredProyectos.length }} de {{ totalProyectos }}</span>
+        <span class="meta-pill">Todos los proyectos</span>
+      </div>
+    </header>
 
-    <h2 class="text-4xl font-bold mb-4 text-center">
-      Nuestros <span class="text-pink-400">Proyectos</span>
-    </h2>
-
-    <p class="text-center text-green-400 mb-10">
-      Total proyectos: {{ proyectos.length }}
-    </p>
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      <a
-        *ngFor="let proyecto of proyectos"
-        [routerLink]="['/proyectos', proyecto.slug]"
-        class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden p-6 block hover:border-pink-500 transition"
+    <div class="filter-pills mb-10">
+      <button
+        *ngFor="let filtro of filtros"
+        type="button"
+        class="filter-pill"
+        [class.active]="selectedFilter === filtro"
+        (click)="applyFilter(filtro)"
       >
-
-        <h3 class="text-xl font-bold mb-3">
-          {{ proyecto.nombre }}
-        </h3>
-
-      <img
-        [src]="'http://localhost:1337' + proyecto.imagen[0].url"
-        [alt]="proyecto.nombre"
-        class="w-full rounded-2xl my-8"
-      />
-
-        <p class="text-slate-400 mb-4">
-          {{ proyecto.descripcionBreve }}
-        </p>
-
-        <div class="flex gap-2">
-
-          <span
-            class="px-3 py-1 bg-pink-500/10 text-pink-400 text-xs rounded-full"
-          >
-            {{ proyecto.tecnologias }}
-          </span>
-
-        </div>
-
-      </a>
-
+        {{ filtro }}
+      </button>
     </div>
 
-  </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <a
+        *ngFor="let proyecto of filteredProyectos"
+        [routerLink]="['/proyectos', proyecto.slug]"
+        class="project-card group"
+      >
+        <div class="card-glow"></div>
+        <div class="card-shimmer"></div>
 
+        <div class="project-image-frame">
+          <img
+            [src]="'http://localhost:1337' + (proyecto.imagen?.[0]?.url || '')"
+            [alt]="proyecto.nombre"
+            class="project-image"
+          />
+          <span *ngIf="proyecto.destacado" class="badge-featured">Featured</span>
+        </div>
+
+        <div class="project-card-body">
+          <div class="project-head">
+            <h3>{{ proyecto.nombre }}</h3>
+            <span *ngIf="proyecto.tipoProyecto" class="project-tag">{{ proyecto.tipoProyecto }}</span>
+          </div>
+
+          <p class="project-copy">{{ proyecto.descripcionBreve }}</p>
+
+          <div class="project-tags">
+            <span *ngFor="let tag of getPreviewTags(proyecto)" class="tech-pill">{{ tag }}</span>
+          </div>
+
+          <div class="project-cta">
+            <span class="cta-pill">Ver proyecto</span>
+            <span class="cta-mini">Detalles</span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
 </section>
 
 <app-footer></app-footer>

@@ -1,103 +1,118 @@
 <app-header></app-header>
 
-<section class="min-h-screen bg-slate-950 text-white py-20 px-8">
+<section class="project-detail-shell min-h-screen py-20 px-6 overflow-hidden">
+  <div class="detail-glow"></div>
 
-  <div
-    *ngIf="proyecto"
-    class="max-w-5xl mx-auto"
-  >
+  <div *ngIf="!proyecto" class="max-w-5xl mx-auto text-center text-slate-400 py-20">
+    Cargando proyecto...
+  </div>
 
-    <div class="bg-slate-900 rounded-3xl p-10">
+  <div *ngIf="proyecto" class="max-w-6xl mx-auto relative space-y-10">
+    <article class="detail-hero">
+      <div class="hero-overlay"></div>
 
-      <h1 class="text-5xl font-bold">
-        {{ proyecto.nombre }}
-      </h1>
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <span class="hero-label">Proyecto Premium</span>
+          <h1 class="hero-title">{{ proyecto.nombre }}</h1>
+          <p class="hero-subtitle">{{ proyecto.tipoProyecto || 'Proyecto estratégico' }}</p>
+          <p class="hero-text">{{ proyecto.descripcionBreve }}</p>
 
-      <p
-        *ngIf="proyecto.tipoProyecto"
-        class="inline-block mt-4 bg-pink-500/10 text-pink-400 px-4 py-2 rounded-full text-sm capitalize"
-      >
-        {{ proyecto.tipoProyecto }}
-      </p>
+          <div class="hero-tags">
+            <span *ngIf="proyecto.tipoProyecto" class="hero-tag">{{ proyecto.tipoProyecto }}</span>
+            <span *ngIf="proyecto.destacado" class="hero-tag featured">Featured</span>
+          </div>
 
-        <img
-        [src]="'http://localhost:1337' + proyecto.imagen[0].url"
-        [alt]="proyecto.nombre"
-        class="w-full rounded-2xl my-8"
-        />
+          <div class="hero-actions">
+            <a
+              *ngIf="proyecto.repositorio"
+              [href]="proyecto.repositorio"
+              target="_blank"
+              class="hero-button github"
+            >GitHub</a>
+            <a
+              *ngIf="proyecto.demo"
+              [href]="proyecto.demo"
+              target="_blank"
+              class="hero-button demo"
+            >Demo</a>
+          </div>
 
-      <p class="text-pink-400 text-xl mt-4">
-        {{ proyecto.descripcionBreve }}
-      </p>
+          <div class="hero-stats">
+            <div class="stat-card">
+              <span>Programadores</span>
+              <strong>{{ proyecto.programadores?.length || 0 }}</strong>
+            </div>
+            <div class="stat-card">
+              <span>Tecnologías</span>
+              <strong>{{ getPreviewTags(proyecto).length }}</strong>
+            </div>
+          </div>
+        </div>
 
-      <div
-        *ngIf="proyecto.descripcionCompleta"
-        class="mt-8"
-      >
-        <h2 class="text-2xl font-bold mb-4">
-          Descripción completa
-        </h2>
-
-        <p class="text-slate-300 whitespace-pre-line leading-relaxed">
-          {{ obtenerTextoCompleto(proyecto.descripcionCompleta) }}
-        </p>
+        <div class="hero-visual">
+          <img
+            [src]="'http://localhost:1337' + (proyecto.imagen?.[0]?.url || '')"
+            [alt]="proyecto.nombre"
+            class="hero-image"
+          />
+        </div>
       </div>
+    </article>
 
-      <div class="mt-8">
+    <div class="detail-body grid gap-8 lg:grid-cols-[1.3fr_0.9fr]">
+      <section class="glass-panel detail-panel">
+        <div class="panel-head">
+          <span class="panel-chip">Descripción</span>
+          <h2>Detalle del proyecto</h2>
+        </div>
 
-        <span
-          class="bg-pink-500/20 text-pink-400 px-4 py-2 rounded-full"
-        >
-          {{ proyecto.tecnologias }}
-        </span>
+        <p class="panel-copy whitespace-pre-line">{{ obtenerTextoCompleto(proyecto.descripcionCompleta) }}</p>
 
-      </div>
+        <div class="panel-tags">
+          <span *ngFor="let tag of getPreviewTags(proyecto)" class="detail-tag">{{ tag }}</span>
+        </div>
+      </section>
 
-      <div class="flex gap-4 mt-8">
+      <aside class="glass-panel side-panel">
+        <div class="panel-head">
+          <span class="panel-chip">Detalles</span>
+          <h2>Equipo y acceso</h2>
+        </div>
 
-        <section
-          *ngIf="proyecto.programadores?.length > 0"
-          class="mt-10"
-        >
-          <h2 class="text-2xl font-bold mb-5">
-            Programadores participantes
-          </h2>
-
-          <div class="flex flex-wrap gap-3">
-
+        <div class="info-group">
+          <h3>Programadores participantes</h3>
+          <div class="team-list">
             <a
               *ngFor="let programador of proyecto.programadores"
               [routerLink]="['/programadores', programador.slug]"
-              class="bg-slate-800 border border-slate-700 hover:border-pink-500 px-4 py-3 rounded-xl transition"
+              class="team-pill"
             >
               {{ programador.nombre }}
             </a>
-
           </div>
-        </section>
+        </div>
 
-        <a
-          [href]="proyecto.repositorio"
-          target="_blank"
-          class="bg-slate-700 px-4 py-2 rounded-xl"
-        >
-          Repositorio
-        </a>
-
-        <a
-          [href]="proyecto.demo"
-          target="_blank"
-          class="bg-green-600 px-4 py-2 rounded-xl"
-        >
-          Demo
-        </a>
-
-      </div>
-
+        <div class="info-group">
+          <h3>Accesos rápidos</h3>
+          <div class="detail-buttons">
+            <a
+              *ngIf="proyecto.repositorio"
+              [href]="proyecto.repositorio"
+              target="_blank"
+              class="link-button"
+            >Ver Repositorio</a>
+            <a
+              *ngIf="proyecto.demo"
+              [href]="proyecto.demo"
+              target="_blank"
+              class="link-button demo"
+            >Ver Demo</a>
+          </div>
+        </div>
+      </aside>
     </div>
-
   </div>
-
 </section>
 
 <app-footer></app-footer>

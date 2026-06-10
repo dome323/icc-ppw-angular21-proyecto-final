@@ -10,27 +10,22 @@
       <p class="servicios-copy">
         Una presentación visual renovada con glassmorphism, holo shimmer, hover lift y animaciones suaves para cada tarjeta.
       </p>
-      <div class="servicios-count">Total servicios: <strong>{{ servicios.length }}</strong></div>
+      <div class="servicios-count">Total servicios: <strong>{{ serviceCards.length }}</strong></div>
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <article *ngFor="let servicio of servicios; let i = index" class="servicio-card group">
+      <article *ngFor="let servicio of serviceCards" class="servicio-card group">
         <div class="card-glow"></div>
         <div class="card-shimmer"></div>
 
         <div class="card-top">
           <span class="card-chip">Servicio</span>
-          <h2>{{ serviceTitles[i] || servicio.nombre }}</h2>
+          <h2>{{ servicio.nombre }}</h2>
         </div>
 
         <p class="card-description">
           {{ servicio.descripcion }}
         </p>
-
-        <div class="card-meta">
-          <span class="meta-pill">Presentación</span>
-          <span class="meta-pill active">Premium</span>
-        </div>
       </article>
     </div>
   </div>

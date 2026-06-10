@@ -30,35 +30,36 @@ export class ProjectDetailPageComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-
-    const slug =
-      this.route.snapshot.paramMap.get('slug');
-
-    const response: any =
-      await this.strapiService.getProyectoBySlug(slug!);
-
+    const slug = this.route.snapshot.paramMap.get('slug');
+    const response: any = await this.strapiService.getProyectoBySlug(slug!);
     this.proyecto = response.data[0];
-
-    console.log(this.proyecto);
-
     this.cd.detectChanges();
-
   }
 
   obtenerTextoCompleto(bloques: any[]): string {
+    if (!Array.isArray(bloques)) {
+      return '';
+    }
 
-  if (!Array.isArray(bloques)) {
-    return '';
+    return bloques
+      .map(bloque =>
+        bloque.children
+          ?.map((child: any) => child.text ?? '')
+          .join('')
+      )
+      .filter(Boolean)
+      .join('\n\n');
   }
 
-  return bloques
-    .map(bloque =>
-      bloque.children
-        ?.map((child: any) => child.text ?? '')
-        .join('')
-    )
-    .filter(Boolean)
-    .join('\n\n');
-}
+  getPreviewTags(proyecto: any): string[] {
+    if (!proyecto?.tecnologias) {
+      return [];
+    }
 
+    return proyecto.tecnologias
+      .toString()
+      .split(',')
+      .map((tag: string) => tag.trim())
+      .filter(Boolean);
+  }
 }
