@@ -14,12 +14,11 @@
       <div class="hero-grid">
 
         <div class="hero-avatar-frame">
-          <img
-            *ngIf="programador.foto?.url"
-            [src]="'http://localhost:1337' + programador.foto.url"
-            [alt]="programador.nombre"
-            class="hero-avatar"
-          />
+        <img
+          *ngIf="mediaUrl.get(programador.foto)"
+          [src]="mediaUrl.get(programador.foto)"
+          [alt]="'Foto de perfil de ' + programador.nombre"
+        >
           <div class="avatar-glow"></div>
         </div>
 

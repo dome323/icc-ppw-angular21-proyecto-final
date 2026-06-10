@@ -22,10 +22,10 @@
         <div class="card-top">
           <div class="avatar-ring">
             <img
-              [src]="'http://localhost:1337' + programador.foto.url"
-              [alt]="programador.nombre"
-              class="avatar"
-            />
+              *ngIf="mediaUrl.get(programador.foto)"
+              [src]="mediaUrl.get(programador.foto)"
+              [alt]="'Foto de perfil de ' + programador.nombre"
+            >
           </div>
           <div class="card-heading">
             <h2>{{ programador.nombre }}</h2>

@@ -1,118 +1,309 @@
 <app-header></app-header>
 
-<section class="project-detail-shell min-h-screen py-20 px-6 overflow-hidden">
+<section
+  class="project-detail-shell min-h-screen py-20 px-6 overflow-hidden"
+>
   <div class="detail-glow"></div>
 
-  <div *ngIf="!proyecto" class="max-w-5xl mx-auto text-center text-slate-400 py-20">
+
+  <!-- CARGANDO -->
+  <div
+    *ngIf="cargando"
+    class="max-w-5xl mx-auto text-center text-slate-400 py-20"
+  >
     Cargando proyecto...
   </div>
 
-  <div *ngIf="proyecto" class="max-w-6xl mx-auto relative space-y-10">
+
+  <!-- ERROR -->
+  <div
+    *ngIf="!cargando && mensajeError"
+    class="max-w-3xl mx-auto text-center text-red-400 py-20"
+  >
+    {{ mensajeError }}
+  </div>
+
+
+  <!-- PROYECTO -->
+  <div
+    *ngIf="!cargando && proyecto"
+    class="max-w-6xl mx-auto relative space-y-10"
+  >
+
     <article class="detail-hero">
+
       <div class="hero-overlay"></div>
 
       <div class="hero-grid">
+
+        <!-- INFORMACIÓN -->
         <div class="hero-copy">
-          <span class="hero-label">Proyecto Premium</span>
-          <h1 class="hero-title">{{ proyecto.nombre }}</h1>
-          <p class="hero-subtitle">{{ proyecto.tipoProyecto || 'Proyecto estratégico' }}</p>
-          <p class="hero-text">{{ proyecto.descripcionBreve }}</p>
+
+          <span class="hero-label">
+            Proyecto Premium
+          </span>
+
+          <h1 class="hero-title">
+            {{ proyecto.nombre }}
+          </h1>
+
+          <p class="hero-subtitle">
+            {{
+              proyecto.tipoProyecto ||
+              'Proyecto estratégico'
+            }}
+          </p>
+
+          <p class="hero-text">
+            {{ proyecto.descripcionBreve }}
+          </p>
+
 
           <div class="hero-tags">
-            <span *ngIf="proyecto.tipoProyecto" class="hero-tag">{{ proyecto.tipoProyecto }}</span>
-            <span *ngIf="proyecto.destacado" class="hero-tag featured">Featured</span>
+
+            <span
+              *ngIf="proyecto.tipoProyecto"
+              class="hero-tag"
+            >
+              {{ proyecto.tipoProyecto }}
+            </span>
+
+            <span
+              *ngIf="proyecto.destacado"
+              class="hero-tag featured"
+            >
+              Featured
+            </span>
+
           </div>
 
+
+          <!-- BOTONES -->
           <div class="hero-actions">
+
             <a
               *ngIf="proyecto.repositorio"
               [href]="proyecto.repositorio"
               target="_blank"
+              rel="noopener noreferrer"
               class="hero-button github"
-            >GitHub</a>
+            >
+              GitHub
+            </a>
+
             <a
               *ngIf="proyecto.demo"
               [href]="proyecto.demo"
               target="_blank"
+              rel="noopener noreferrer"
               class="hero-button demo"
-            >Demo</a>
+            >
+              Demo
+            </a>
+
           </div>
 
+
+          <!-- ESTADÍSTICAS -->
           <div class="hero-stats">
+
             <div class="stat-card">
-              <span>Programadores</span>
-              <strong>{{ proyecto.programadores?.length || 0 }}</strong>
+
+              <span>
+                Programadores
+              </span>
+
+              <strong>
+                {{
+                  proyecto.programadores?.length ||
+                  0
+                }}
+              </strong>
+
             </div>
+
             <div class="stat-card">
-              <span>Tecnologías</span>
-              <strong>{{ getPreviewTags(proyecto).length }}</strong>
+
+              <span>
+                Tecnologías
+              </span>
+
+              <strong>
+                {{
+                  getPreviewTags(
+                    proyecto.tecnologias
+                  ).length
+                }}
+              </strong>
+
             </div>
+
           </div>
+
         </div>
 
+
+        <!-- IMAGEN -->
         <div class="hero-visual">
+
           <img
-            [src]="'http://localhost:1337' + (proyecto.imagen?.[0]?.url || '')"
-            [alt]="proyecto.nombre"
-            class="hero-image"
-          />
+            *ngIf="mediaUrl.get(proyecto.imagen)"
+            [src]="mediaUrl.get(proyecto.imagen)"
+            [alt]="'Imagen del proyecto ' + proyecto.nombre"
+          >
+
+          <div
+            *ngIf="!mediaUrl.get(proyecto.imagen)"
+            class="w-full min-h-72 flex items-center justify-center rounded-3xl bg-slate-900 text-slate-500"
+          >
+            Sin imagen disponible
+          </div>
+
         </div>
+
       </div>
+
     </article>
 
-    <div class="detail-body grid gap-8 lg:grid-cols-[1.3fr_0.9fr]">
+
+    <!-- CONTENIDO -->
+    <div
+      class="detail-body grid gap-8 lg:grid-cols-[1.3fr_0.9fr]"
+    >
+
+      <!-- DESCRIPCIÓN -->
       <section class="glass-panel detail-panel">
+
         <div class="panel-head">
-          <span class="panel-chip">Descripción</span>
-          <h2>Detalle del proyecto</h2>
+
+          <span class="panel-chip">
+            Descripción
+          </span>
+
+          <h2>
+            Detalle del proyecto
+          </h2>
+
         </div>
 
-        <p class="panel-copy whitespace-pre-line">{{ obtenerTextoCompleto(proyecto.descripcionCompleta) }}</p>
+        <p class="panel-copy whitespace-pre-line">
+          {{
+            obtenerTextoCompleto(
+              proyecto.descripcionCompleta
+            )
+          }}
+        </p>
+
 
         <div class="panel-tags">
-          <span *ngFor="let tag of getPreviewTags(proyecto)" class="detail-tag">{{ tag }}</span>
+
+          <span
+            *ngFor="
+              let tag of getPreviewTags(
+                proyecto.tecnologias
+              )
+            "
+            class="detail-tag"
+          >
+            {{ tag }}
+          </span>
+
         </div>
+
       </section>
 
+
+      <!-- EQUIPO -->
       <aside class="glass-panel side-panel">
+
         <div class="panel-head">
-          <span class="panel-chip">Detalles</span>
-          <h2>Equipo y acceso</h2>
+
+          <span class="panel-chip">
+            Detalles
+          </span>
+
+          <h2>
+            Equipo y acceso
+          </h2>
+
         </div>
 
+
         <div class="info-group">
-          <h3>Programadores participantes</h3>
+
+          <h3>
+            Programadores participantes
+          </h3>
+
           <div class="team-list">
+
             <a
-              *ngFor="let programador of proyecto.programadores"
-              [routerLink]="['/programadores', programador.slug]"
+              *ngFor="
+                let programador of
+                proyecto.programadores
+              "
+              [routerLink]="[
+                '/programadores',
+                programador.slug
+              ]"
               class="team-pill"
             >
               {{ programador.nombre }}
             </a>
+
+            <p
+              *ngIf="
+                !proyecto.programadores ||
+                proyecto.programadores.length === 0
+              "
+              class="text-slate-400"
+            >
+              No hay programadores asociados.
+            </p>
+
           </div>
+
         </div>
 
+
         <div class="info-group">
-          <h3>Accesos rápidos</h3>
+
+          <h3>
+            Accesos rápidos
+          </h3>
+
           <div class="detail-buttons">
+
             <a
               *ngIf="proyecto.repositorio"
               [href]="proyecto.repositorio"
               target="_blank"
+              rel="noopener noreferrer"
               class="link-button"
-            >Ver Repositorio</a>
+            >
+              Ver Repositorio
+            </a>
+
             <a
               *ngIf="proyecto.demo"
               [href]="proyecto.demo"
               target="_blank"
+              rel="noopener noreferrer"
               class="link-button demo"
-            >Ver Demo</a>
+            >
+              Ver Demo
+            </a>
+
           </div>
+
         </div>
+
       </aside>
+
     </div>
+
   </div>
+
 </section>
 
 <app-footer></app-footer>

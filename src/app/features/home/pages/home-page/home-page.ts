@@ -3,10 +3,10 @@ import { RouterModule } from '@angular/router';
 import { FooterComponent } from '../../../../shared/components/app-footer/app-footer';
 import { HeaderComponent } from '../../../../shared/components/app-header/app-header';
 import { TranslocoModule } from '@ngneat/transloco';
-
+import { environment } from '../../../../../enviroments/environment';
 import { CommonModule } from '@angular/common';
 import { StrapiService } from '../../../../core/services/strapi/strapi.service';
-
+import { MediaUrlService } from '../../../../core/services/strapi/media-url.service';
 @Component({
   selector: 'app-home-page',
   standalone: true,
@@ -26,6 +26,7 @@ export class HomePageComponent implements OnInit {
   proyectos: any[] = [];
   servicios: any[] = [];
   hoveredProgramador: any = null;
+  strapiBaseUrl: string = environment.strapiUrl;
 
   private teamStats: Record<string, {
     level: number;
@@ -61,7 +62,9 @@ export class HomePageComponent implements OnInit {
 
   constructor(
     private strapiService: StrapiService,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    public mediaUrl: MediaUrlService
+
   ) {}
 
   async ngOnInit() {

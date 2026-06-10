@@ -54,7 +54,11 @@
           <article *ngFor="let programador of programadores" class="feature-card reveal reveal-delay-1"
             (mouseenter)="setHover(programador)" (mouseleave)="clearHover()">
             <div class="feature-card__avatar">
-              <img [src]="'http://localhost:1337' + programador.foto.url" [alt]="programador.nombre" />
+            <img
+              *ngIf="mediaUrl.get(programador.foto)"
+              [src]="mediaUrl.get(programador.foto)"
+              [alt]="'Foto de perfil de ' + programador.nombre"
+            >         
             </div>
             <div class="feature-card__body">
               <h3>{{ programador.nombre }}</h3>

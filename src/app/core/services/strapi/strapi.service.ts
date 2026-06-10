@@ -56,6 +56,7 @@ export class StrapiService {
   }
 
   async getProgramadorByCorreo(correo: string) {
+
     const correoLimpio =
       correo.trim().toLowerCase();
 
