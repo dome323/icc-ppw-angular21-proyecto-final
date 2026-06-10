@@ -23,6 +23,21 @@ export class ServiciosPageComponent implements OnInit {
 
   servicios: any[] = [];
 
+  serviceTitles = [
+    'Desarrollo Full Stack',
+    'Oracle Database',
+    'Ciberseguridad',
+    'Infraestructura',
+    'Cloud / AWS',
+    'Redes empresariales',
+    'Auditoría de seguridad',
+    'Arquitectura de software',
+    'Sistemas embebidos',
+    'DevOps & CI/CD',
+    'Automatización',
+    'Integración de IA'
+  ];
+
 constructor(
   private strapiService: StrapiService,
   private cd: ChangeDetectorRef

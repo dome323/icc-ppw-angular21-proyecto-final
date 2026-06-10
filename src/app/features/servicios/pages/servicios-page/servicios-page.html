@@ -1,38 +1,39 @@
 <app-header></app-header>
 
-<section class="min-h-screen bg-slate-950 text-white py-20 px-8">
+<section class="servicios-shell min-h-screen py-20 px-6 overflow-hidden">
+  <div class="shell-glow"></div>
 
-  <div class="max-w-7xl mx-auto">
-
-    <h1 class="text-5xl font-bold text-center mb-4">
-      Nuestros Servicios
-    </h1>
-
-    <p class="text-center text-green-400 mb-10">
-      Total servicios: {{ servicios.length }}
-    </p>
+  <div class="max-w-7xl mx-auto relative">
+    <header class="servicios-head text-center mb-12">
+      <span class="servicios-badge">Servicios · Experiencia Premium</span>
+      <h1 class="servicios-title">Nuestros Servicios</h1>
+      <p class="servicios-copy">
+        Una presentación visual renovada con glassmorphism, holo shimmer, hover lift y animaciones suaves para cada tarjeta.
+      </p>
+      <div class="servicios-count">Total servicios: <strong>{{ servicios.length }}</strong></div>
+    </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <article *ngFor="let servicio of servicios; let i = index" class="servicio-card group">
+        <div class="card-glow"></div>
+        <div class="card-shimmer"></div>
 
-      <div
-        *ngFor="let servicio of servicios"
-        class="bg-slate-900 border border-slate-800 rounded-2xl p-6"
-        >
+        <div class="card-top">
+          <span class="card-chip">Servicio</span>
+          <h2>{{ serviceTitles[i] || servicio.nombre }}</h2>
+        </div>
 
-        <h2 class="text-2xl font-bold mb-4">
-          {{ servicio.nombre }}
-        </h2>
-
-        <p class="text-slate-400">
+        <p class="card-description">
           {{ servicio.descripcion }}
         </p>
 
-      </div>
-
+        <div class="card-meta">
+          <span class="meta-pill">Presentación</span>
+          <span class="meta-pill active">Premium</span>
+        </div>
+      </article>
     </div>
-
   </div>
-
 </section>
 
 <app-footer></app-footer>
