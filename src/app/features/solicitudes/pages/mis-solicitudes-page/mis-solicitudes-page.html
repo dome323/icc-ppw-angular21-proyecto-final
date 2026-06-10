@@ -1,144 +1,479 @@
 <app-header></app-header>
 
-<section class="dashboard-shell bg-slate-950 text-white px-6 py-20">
+<section class="dashboard-shell bg-slate-950 text-white px-4 sm:px-6 py-12 sm:py-20">
+
   <div class="max-w-6xl mx-auto space-y-10">
 
+    <!-- ENCABEZADO -->
     <div class="text-center mb-10">
-      <p class="dashboard-badge">{{ 'misSolicitudes.panelTitle' | transloco }}</p>
+
+      <p class="dashboard-badge">
+        {{ 'misSolicitudes.panelTitle' | transloco }}
+      </p>
+
       <h1 class="dashboard-title">
         {{ 'misSolicitudes.title' | transloco }}
-        <span class="dashboard-accent">{{ 'misSolicitudes.titleAccent' | transloco }}</span>
+
+        <span class="dashboard-accent">
+          {{ 'misSolicitudes.titleAccent' | transloco }}
+        </span>
       </h1>
+
       <p class="dashboard-description">
         {{ 'misSolicitudes.description' | transloco }}
       </p>
+
     </div>
 
-    <div *ngIf="cargando" class="text-center text-slate-400 py-16">
+
+    <!-- CARGANDO -->
+    <div
+      *ngIf="cargando"
+      class="text-center text-slate-400 py-16"
+    >
       {{ 'misSolicitudes.loading' | transloco }}
     </div>
 
-    <div *ngIf="!cargando && mensajeError" class="max-w-2xl mx-auto bg-red-500/10 border border-red-500/30 text-red-400 rounded-2xl p-5 text-center">
+
+    <!-- MENSAJE DE ERROR -->
+    <div
+      *ngIf="!cargando && mensajeError"
+      class="max-w-2xl mx-auto bg-red-500/10 border border-red-500/30 text-red-400 rounded-2xl p-5 text-center"
+    >
       {{ mensajeError }}
     </div>
 
-    <div *ngIf="!cargando && !mensajeError && solicitudes.length === 0" class="max-w-2xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-10 text-center">
-      <h2 class="text-2xl font-bold">{{ 'misSolicitudes.noRequestsTitle' | transloco }}</h2>
-      <p class="text-slate-400 mt-4">{{ 'misSolicitudes.noRequestsCopy' | transloco }}</p>
-      <a routerLink="/contact" class="inline-block mt-7 bg-cyan-500 hover:bg-cyan-400 px-6 py-3 rounded-xl font-semibold transition">
+
+    <!-- SIN SOLICITUDES -->
+    <div
+      *ngIf="
+        !cargando &&
+        !mensajeError &&
+        solicitudes.length === 0
+      "
+      class="max-w-2xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-8 sm:p-10 text-center"
+    >
+
+      <h2 class="text-2xl font-bold">
+        {{ 'misSolicitudes.noRequestsTitle' | transloco }}
+      </h2>
+
+      <p class="text-slate-400 mt-4">
+        {{ 'misSolicitudes.noRequestsCopy' | transloco }}
+      </p>
+
+      <a
+        routerLink="/contact"
+        class="inline-block mt-7 bg-cyan-500 hover:bg-cyan-400 text-slate-950 px-6 py-3 rounded-xl font-semibold transition"
+      >
         {{ 'misSolicitudes.createRequest' | transloco }}
       </a>
+
     </div>
 
-    <div *ngIf="!cargando && !mensajeError && solicitudes.length > 0" class="space-y-10">
 
+    <!-- DASHBOARD -->
+    <div
+      *ngIf="
+        !cargando &&
+        !mensajeError &&
+        solicitudes.length > 0
+      "
+      class="space-y-10"
+    >
+
+      <!-- PARTE SUPERIOR -->
       <div class="dashboard-top grid gap-8 lg:grid-cols-[1.4fr_0.85fr]">
 
-        <div class="dashboard-intro rounded-[2rem] border border-slate-800 bg-slate-900 p-10 shadow-[0_30px_70px_-40px_rgba(56,189,248,0.55)]">
-          <p class="dashboard-label">{{ 'misSolicitudes.overviewTitle' | transloco }}</p>
-          <h2 class="text-3xl font-black mt-5">{{ 'misSolicitudes.overviewSubtitle' | transloco }}</h2>
-          <p class="text-slate-400 mt-4 leading-7">{{ 'misSolicitudes.overviewCopy' | transloco }}</p>
+        <!-- RESUMEN -->
+        <div
+          class="dashboard-intro rounded-4xl border border-slate-800 bg-slate-900 p-6 sm:p-10 shadow-[0_30px_70px_-40px_rgba(56,189,248,0.55)]"
+        >
 
+          <p class="dashboard-label">
+            {{ 'misSolicitudes.overviewTitle' | transloco }}
+          </p>
+
+          <h2 class="text-2xl sm:text-3xl font-black mt-5">
+            {{ 'misSolicitudes.overviewSubtitle' | transloco }}
+          </h2>
+
+          <p class="text-slate-400 mt-4 leading-7">
+            {{ 'misSolicitudes.overviewCopy' | transloco }}
+          </p>
+
+
+          <!-- ESTADÍSTICAS -->
           <div class="stats-grid mt-10 grid gap-4 sm:grid-cols-2">
+
             <article class="stat-card">
-              <p class="stat-label">{{ 'misSolicitudes.stats.total' | transloco }}</p>
-              <p class="stat-value">{{ totalSolicitudes }}</p>
+
+              <p class="stat-label">
+                {{ 'misSolicitudes.stats.total' | transloco }}
+              </p>
+
+              <p class="stat-value">
+                {{ totalSolicitudes }}
+              </p>
+
             </article>
+
+
             <article class="stat-card">
-              <p class="stat-label">{{ 'misSolicitudes.stats.pending' | transloco }}</p>
-              <p class="stat-value">{{ pendientes }}</p>
+
+              <p class="stat-label">
+                {{ 'misSolicitudes.stats.pending' | transloco }}
+              </p>
+
+              <p class="stat-value">
+                {{ pendientes }}
+              </p>
+
             </article>
+
+
             <article class="stat-card">
-              <p class="stat-label">{{ 'misSolicitudes.stats.responded' | transloco }}</p>
-              <p class="stat-value">{{ respondidas }}</p>
+
+              <p class="stat-label">
+                {{ 'misSolicitudes.stats.responded' | transloco }}
+              </p>
+
+              <p class="stat-value">
+                {{ respondidas }}
+              </p>
+
             </article>
+
+
             <article class="stat-card">
-              <p class="stat-label">{{ 'misSolicitudes.stats.rejected' | transloco }}</p>
-              <p class="stat-value">{{ rechazadas }}</p>
+
+              <p class="stat-label">
+                {{ 'misSolicitudes.stats.rejected' | transloco }}
+              </p>
+
+              <p class="stat-value">
+                {{ rechazadas }}
+              </p>
+
             </article>
+
           </div>
+
         </div>
 
-        <aside class="dashboard-panel rounded-[2rem] border border-slate-800 bg-slate-900 p-8">
-          <div class="flex items-center justify-between gap-4">
+
+        <!-- NOTIFICACIONES -->
+        <aside
+          class="dashboard-panel rounded-4xl border border-slate-800 bg-slate-900 p-6 sm:p-8"
+        >
+
+          <div class="flex items-start justify-between gap-4">
+
             <div>
-              <p class="dashboard-panel-title">{{ 'misSolicitudes.notificationsTitle' | transloco }}</p>
-              <p class="text-slate-400 mt-2 text-sm">{{ 'misSolicitudes.notificationsCopy' | transloco }}</p>
+
+              <p class="dashboard-panel-title">
+                {{ 'misSolicitudes.notificationsTitle' | transloco }}
+              </p>
+
+              <p class="text-slate-400 mt-2 text-sm">
+                {{ 'misSolicitudes.notificationsCopy' | transloco }}
+              </p>
+
             </div>
-            <span class="badge">{{ notifications.length }}</span>
+
+            <span class="badge">
+              {{ notifications.length }}
+            </span>
+
           </div>
+
 
           <div class="mt-8 space-y-4">
-            <article *ngFor="let note of notifications" class="notification-card">
+
+            <article
+              *ngFor="let note of notifications"
+              class="notification-card"
+            >
               {{ note }}
             </article>
-            <p *ngIf="notifications.length === 0" class="text-slate-400">{{ 'misSolicitudes.noNotifications' | transloco }}</p>
+
+            <p
+              *ngIf="notifications.length === 0"
+              class="text-slate-400"
+            >
+              {{ 'misSolicitudes.noNotifications' | transloco }}
+            </p>
+
           </div>
+
         </aside>
+
       </div>
 
-      <div class="dashboard-grid gap-8 lg:grid lg:grid-cols-[0.9fr_1.1fr]">
 
-        <main class="dashboard-panel rounded-[2rem] border border-slate-800 bg-slate-900 p-8">
-          <div class="flex items-center justify-between gap-4">
-            <div>
-              <p class="dashboard-panel-title">{{ 'misSolicitudes.timelineTitle' | transloco }}</p>
-              <p class="text-slate-400 mt-2 text-sm">{{ 'misSolicitudes.timelineCopy' | transloco }}</p>
-            </div>
+      <!-- PARTE INFERIOR -->
+      <div class="dashboard-grid grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
+
+        <!-- TIMELINE -->
+        <main
+          class="dashboard-panel rounded-4xl border border-slate-800 bg-slate-900 p-6 sm:p-8"
+        >
+
+          <div>
+
+            <p class="dashboard-panel-title">
+              {{ 'misSolicitudes.timelineTitle' | transloco }}
+            </p>
+
+            <p class="text-slate-400 mt-2 text-sm">
+              {{ 'misSolicitudes.timelineCopy' | transloco }}
+            </p>
+
           </div>
 
-          <div class="timeline mt-8 space-y-4">
-            <article *ngFor="let solicitud of solicitudes | slice:0:4" class="timeline-item rounded-3xl border border-slate-800 bg-slate-950 p-6">
-              <div class="flex items-start justify-between gap-4">
+
+          <div class="timeline mt-8 space-y-5">
+
+            <article
+              *ngFor="let solicitud of solicitudes | slice:0:4"
+              class="timeline-item rounded-3xl border border-slate-800 bg-slate-950 p-5 sm:p-6"
+            >
+
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+
                 <div>
-                  <p class="text-slate-400 text-sm">{{ 'misSolicitudes.requestProgrammer' | transloco }}</p>
-                  <h3 class="text-xl font-semibold mt-1">{{ solicitud.programadorNombre }}</h3>
+
+                  <p class="text-slate-400 text-sm">
+                    {{ 'misSolicitudes.requestProgrammer' | transloco }}
+                  </p>
+
+                  <h3 class="text-xl font-semibold mt-1">
+                    {{ solicitud.programadorNombre }}
+                  </h3>
+
                 </div>
-                <span [ngClass]="claseEstado(solicitud.estado)" class="timeline-badge">{{ estadoLabel(solicitud.estado) }}</span>
+
+                <span
+                  [ngClass]="claseEstado(solicitud.estado)"
+                  class="timeline-badge self-start"
+                >
+                  {{ estadoLabel(solicitud.estado) }}
+                </span>
+
               </div>
-              <p class="text-slate-400 mt-4 text-sm">{{ formatearFecha(solicitud.fecha) }}</p>
-              <p class="text-slate-300 mt-4 leading-7">{{ solicitud.descripcion }}</p>
+
+
+              <p class="text-slate-400 mt-4 text-sm">
+                {{ formatearFecha(solicitud.fecha) }}
+              </p>
+
+
+              <div class="mt-4">
+
+                <p class="text-xs uppercase tracking-wider text-slate-500">
+                  {{ 'misSolicitudes.projectDescription' | transloco }}
+                </p>
+
+                <p class="text-slate-300 mt-2 leading-7 wrap-break-word">
+                  {{ solicitud.descripcion }}
+                </p>
+
+              </div>
+
+
+              <!-- RESPUESTA EN TIMELINE -->
+              <div
+                *ngIf="solicitud.respuesta"
+                class="mt-5 rounded-2xl border border-cyan-400/30 bg-cyan-400/10 p-4"
+              >
+
+                <p class="text-xs font-bold uppercase tracking-widest text-cyan-400">
+                  {{ 'misSolicitudes.developerResponse' | transloco }}
+                </p>
+
+                <p class="mt-3 text-sm leading-7 text-slate-200 wrap-break-word">
+                  {{ solicitud.respuesta }}
+                </p>
+
+                <p
+                  *ngIf="solicitud.fechaRespuesta"
+                  class="mt-3 text-xs text-slate-400"
+                >
+                  Respondida el
+                  {{ formatearFecha(solicitud.fechaRespuesta) }}
+                </p>
+
+              </div>
+
             </article>
+
           </div>
+
         </main>
 
-        <section class="history-panel rounded-[2rem] border border-slate-800 bg-slate-900 p-8">
-          <div class="flex items-center justify-between gap-4">
+
+        <!-- HISTORIAL -->
+        <section
+          class="history-panel rounded-4xl border border-slate-800 bg-slate-900 p-6 sm:p-8"
+        >
+
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
             <div>
-              <p class="dashboard-panel-title">{{ 'misSolicitudes.historyLabel' | transloco }}</p>
-              <h2 class="text-2xl font-semibold mt-2">{{ 'misSolicitudes.historyTitle' | transloco }}</h2>
+
+              <p class="dashboard-panel-title">
+                {{ 'misSolicitudes.historyLabel' | transloco }}
+              </p>
+
+              <h2 class="text-2xl font-semibold mt-2">
+                {{ 'misSolicitudes.historyTitle' | transloco }}
+              </h2>
+
             </div>
-            <a routerLink="/contact" class="button button-primary">{{ 'misSolicitudes.createRequest' | transloco }}</a>
+
+            <a
+              routerLink="/contact"
+              class="button button-primary text-center"
+            >
+              {{ 'misSolicitudes.createRequest' | transloco }}
+            </a>
+
           </div>
+
 
           <div class="mt-8 grid gap-5 md:grid-cols-2">
-            <article *ngFor="let solicitud of solicitudes" class="history-card rounded-3xl border border-slate-800 bg-slate-950 p-6">
-              <div class="flex items-center justify-between gap-4">
+
+            <article
+              *ngFor="let solicitud of solicitudes"
+              class="history-card rounded-3xl border border-slate-800 bg-slate-950 p-5 sm:p-6"
+            >
+
+              <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+
                 <div>
-                  <p class="text-slate-400 text-sm">{{ 'misSolicitudes.requester' | transloco }}</p>
-                  <p class="text-slate-200 font-semibold mt-1">{{ solicitud.nombre }}</p>
+
+                  <p class="text-slate-400 text-sm">
+                    {{ 'misSolicitudes.requester' | transloco }}
+                  </p>
+
+                  <p class="text-slate-200 font-semibold mt-1 wrap-break-word">
+                    {{ solicitud.nombre }}
+                  </p>
+
+                  <p
+                    *ngIf="solicitud.correo"
+                    class="text-slate-500 text-sm mt-1 break-all"
+                  >
+                    {{ solicitud.correo }}
+                  </p>
+
                 </div>
-                <span [ngClass]="claseEstado(solicitud.estado)" class="timeline-badge">{{ estadoLabel(solicitud.estado) }}</span>
+
+                <span
+                  [ngClass]="claseEstado(solicitud.estado)"
+                  class="timeline-badge self-start"
+                >
+                  {{ estadoLabel(solicitud.estado) }}
+                </span>
+
               </div>
 
-              <div class="mt-6 space-y-4">
+
+              <div class="mt-6 space-y-5">
+
+                <!-- PROGRAMADOR -->
                 <div>
-                  <p class="text-slate-400 text-sm">{{ 'misSolicitudes.requestProgrammer' | transloco }}</p>
-                  <p class="text-slate-200 mt-1">{{ solicitud.programadorNombre }}</p>
+
+                  <p class="text-slate-400 text-sm">
+                    {{ 'misSolicitudes.requestProgrammer' | transloco }}
+                  </p>
+
+                  <p class="text-slate-200 mt-1">
+                    {{ solicitud.programadorNombre }}
+                  </p>
+
                 </div>
+
+
+                <!-- DESCRIPCIÓN -->
                 <div>
-                  <p class="text-slate-400 text-sm">{{ 'misSolicitudes.projectDescription' | transloco }}</p>
-                  <p class="text-slate-300 mt-1 leading-7">{{ solicitud.descripcion }}</p>
+
+                  <p class="text-slate-400 text-sm">
+                    {{ 'misSolicitudes.projectDescription' | transloco }}
+                  </p>
+
+                  <p class="text-slate-300 mt-1 leading-7 wrap-break-word">
+                    {{ solicitud.descripcion }}
+                  </p>
+
                 </div>
-                <p class="text-slate-400 text-xs">{{ 'misSolicitudes.sentOn' | transloco }} {{ formatearFecha(solicitud.fecha) }}</p>
+
+
+                <!-- RESPUESTA DEL PROGRAMADOR -->
+                <div
+                  *ngIf="solicitud.respuesta"
+                  class="rounded-2xl border border-cyan-400/30 bg-cyan-400/10 p-4"
+                >
+
+                  <p class="text-xs font-bold uppercase tracking-widest text-cyan-400">
+                    {{ 'misSolicitudes.developerResponse' | transloco }}
+                  </p>
+
+                  <p class="mt-3 text-sm leading-7 text-slate-200 wrap-break-word">
+                    {{ solicitud.respuesta }}
+                  </p>
+
+                  <p
+                    *ngIf="solicitud.fechaRespuesta"
+                    class="mt-3 text-xs text-slate-400"
+                  >
+                    Respondida el
+                    {{ formatearFecha(solicitud.fechaRespuesta) }}
+                  </p>
+
+                </div>
+
+
+                <!-- PENDIENTE SIN RESPUESTA -->
+                <div
+                  *ngIf="
+                    solicitud.estado === 'pendiente' &&
+                    !solicitud.respuesta
+                  "
+                  class="rounded-2xl border border-yellow-400/20 bg-yellow-400/5 p-4"
+                >
+
+                  <p class="text-sm text-yellow-300">
+                    {{ 'misSolicitudes.status.pending' | transloco }}
+                  </p>
+
+                </div>
+
+
+                <!-- FECHA -->
+                <p class="text-slate-400 text-xs">
+
+                  {{ 'misSolicitudes.sentOn' | transloco }}
+
+                  {{ formatearFecha(solicitud.fecha) }}
+
+                </p>
+
               </div>
+
             </article>
+
           </div>
+
         </section>
+
       </div>
+
     </div>
 
   </div>
+
 </section>
 
 <app-footer></app-footer>
+```

@@ -1,9 +1,5 @@
-import {
-  ChangeDetectorRef,
-  Component,
-  OnInit
-} from '@angular/core';
-
+import {ChangeDetectorRef,Component,OnInit} from '@angular/core';
+import { StrapiService } from '../../../../core/services/strapi/strapi.service';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
@@ -40,60 +36,102 @@ export class MisSolicitudesPageComponent implements OnInit {
   rechazadas = 0;
 
   constructor(
-    private authService: AuthService,
-    private solicitudesService: SolicitudesService,
-    private router: Router,
-    private cd: ChangeDetectorRef,
-    private translocoService: TranslocoService
+   private authService: AuthService,
+  private solicitudesService: SolicitudesService,
+  private strapiService: StrapiService,
+  private router: Router,
+  private cd: ChangeDetectorRef,
+  private translocoService: TranslocoService
   ) {}
 
-  async ngOnInit() {
+async ngOnInit() {
 
-    try {
+  try {
 
-      const usuario =
-        await this.authService.getCurrentUser();
+    const usuario =
+      await this.authService.getCurrentUser();
 
-      if (!usuario) {
-        await this.router.navigate(['/login']);
-        return;
-      }
+    if (!usuario?.email) {
+      await this.router.navigate(['/login']);
+      return;
+    }
 
-      this.solicitudes =
-        await this.solicitudesService
-          .getSolicitudesPorUsuario(usuario.uid);
+    // Verificar si la cuenta pertenece a un programador
+    const programadorResponse: any =
+      await this.strapiService
+        .getProgramadorByCorreo(usuario.email);
 
-      this.totalSolicitudes = this.solicitudes.length;
-      this.respondidas = this.solicitudes.filter(solicitud => solicitud.estado === 'respondida').length;
-      this.rechazadas = this.solicitudes.filter(solicitud => solicitud.estado === 'rechazada').length;
-      this.pendientes = this.totalSolicitudes - this.respondidas - this.rechazadas;
+    const esProgramador =
+      programadorResponse.data?.length > 0;
 
-      this.notifications = this.solicitudes
-        .filter(solicitud => solicitud.estado === 'respondida')
+    // Si es programador, enviarlo a solicitudes recibidas
+    if (esProgramador) {
+      await this.router.navigate([
+        '/solicitudes-recibidas'
+      ]);
+      return;
+    }
+
+    // Si es usuario externo, cargar sus solicitudes
+    this.solicitudes =
+      await this.solicitudesService
+        .getSolicitudesPorUsuario(usuario.uid);
+
+    this.totalSolicitudes =
+      this.solicitudes.length;
+
+    this.respondidas =
+      this.solicitudes.filter(
+        solicitud =>
+          solicitud.estado === 'respondida'
+      ).length;
+
+    this.rechazadas =
+      this.solicitudes.filter(
+        solicitud =>
+          solicitud.estado === 'rechazada'
+      ).length;
+
+    this.pendientes =
+      this.totalSolicitudes -
+      this.respondidas -
+      this.rechazadas;
+
+    this.notifications =
+      this.solicitudes
+        .filter(
+          solicitud =>
+            solicitud.estado === 'respondida'
+        )
         .map(solicitud =>
           this.translocoService.translate(
             'misSolicitudes.notifications.responseReady',
-            { developer: solicitud.programadorNombre }
+            {
+              developer:
+                solicitud.programadorNombre
+            }
           )
         );
 
-    } catch (error) {
+  } catch (error) {
 
-      console.error(
-        'Error al cargar solicitudes:',
-        error
+    console.error(
+      'Error al cargar solicitudes:',
+      error
+    );
+
+    this.mensajeError =
+      this.translocoService.translate(
+        'misSolicitudes.messages.errorLoad'
       );
 
-      this.mensajeError =
-        this.translocoService.translate('misSolicitudes.messages.errorLoad');
+  } finally {
 
-    } finally {
+    this.cargando = false;
+    this.cd.detectChanges();
 
-      this.cargando = false;
-      this.cd.detectChanges();
-
-    }
   }
+}
 
   formatearFecha(fecha: any): string {
 

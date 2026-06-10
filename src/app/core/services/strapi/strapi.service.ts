@@ -57,10 +57,16 @@ async getProyectoBySlug(slug: string) {
     );
   }
 
-async getProgramadorByCorreo(correo: string) {
+async getProgramadorByCorreo(
+  correo: string
+) {
+
+  const correoLimpio =
+    correo.trim().toLowerCase();
+
   return await firstValueFrom(
     this.http.get(
-      `${this.apiUrl}/programadores?filters[correo][$eq]=${encodeURIComponent(correo)}&populate=*`
+      `${this.apiUrl}/programadores?filters[correo][$eq]=${encodeURIComponent(correoLimpio)}&populate=*`
     )
   );
 }

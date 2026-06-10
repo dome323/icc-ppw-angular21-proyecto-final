@@ -1,11 +1,11 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import {ChangeDetectorRef,Component,OnInit} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 import { TranslocoModule } from '@ngneat/transloco';
 
 import { FooterComponent } from '../../../../shared/components/app-footer/app-footer';
 import { HeaderComponent } from '../../../../shared/components/app-header/app-header';
-
 import { StrapiService } from '../../../../core/services/strapi/strapi.service';
 
 @Component({
@@ -16,7 +16,7 @@ import { StrapiService } from '../../../../core/services/strapi/strapi.service';
     RouterModule,
     TranslocoModule,
     FooterComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   templateUrl: './projects-page.html',
   styleUrl: './projects-page.css'
@@ -25,9 +25,16 @@ export class ProjectsPageComponent implements OnInit {
 
   proyectos: any[] = [];
   filteredProyectos: any[] = [];
-  filtros: string[] = ['Todos'];
-  selectedFilter = 'Todos';
-  totalProyectos = 0;
+
+  filtros: string[] = [
+    'todos',
+    'academico',
+    'personal',
+    'laboral',
+    'simulado'
+  ];
+
+  selectedFilter = 'todos';
 
   constructor(
     private strapiService: StrapiService,
@@ -35,44 +42,63 @@ export class ProjectsPageComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    const response: any = await this.strapiService.getProyectos();
-    this.proyectos = response.data ?? [];
-    this.totalProyectos = this.proyectos.length;
-    this.populateFiltros();
-    this.applyFilter('Todos');
-    this.cd.detectChanges();
+    try {
+      const response: any =
+        await this.strapiService.getProyectos();
+
+      this.proyectos = response.data ?? [];
+      this.filteredProyectos = [...this.proyectos];
+
+    } catch (error) {
+      console.error(
+        'Error al cargar proyectos:',
+        error
+      );
+
+      this.proyectos = [];
+      this.filteredProyectos = [];
+
+    } finally {
+      this.cd.detectChanges();
+    }
   }
 
-  populateFiltros() {
-    const tipos = this.proyectos
-      .map(proyecto => proyecto.tipoProyecto?.toString()?.trim())
-      .filter(Boolean);
-
-    const uniqueTipos = [...new Set(tipos)];
-    this.filtros = ['Todos', ...uniqueTipos];
+  get totalProyectos(): number {
+    return this.proyectos.length;
   }
 
-  applyFilter(filtro: string) {
+  applyFilter(filtro: string): void {
     this.selectedFilter = filtro;
-    if (filtro === 'Todos') {
-      this.filteredProyectos = this.proyectos;
+
+    if (filtro === 'todos') {
+      this.filteredProyectos = [...this.proyectos];
       return;
     }
 
-    this.filteredProyectos = this.proyectos.filter(
-      proyecto => proyecto.tipoProyecto?.toString()?.trim() === filtro
-    );
+    this.filteredProyectos =
+      this.proyectos.filter(
+        proyecto =>
+          proyecto.tipoProyecto
+            ?.toLowerCase() === filtro.toLowerCase()
+      );
   }
 
-  getPreviewTags(proyecto: any): string[] {
-    if (!proyecto.tecnologias) {
+  getPreviewTags(
+    tecnologias: string | string[]
+  ): string[] {
+
+    if (Array.isArray(tecnologias)) {
+      return tecnologias.slice(0, 3);
+    }
+
+    if (!tecnologias) {
       return [];
     }
 
-    return proyecto.tecnologias
-      .toString()
+    return tecnologias
       .split(',')
-      .map((tag: string) => tag.trim())
-      .filter(Boolean);
+      .map(tecnologia => tecnologia.trim())
+      .filter(Boolean)
+      .slice(0, 3);
   }
 }
