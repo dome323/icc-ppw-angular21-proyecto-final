@@ -1,299 +1,84 @@
-<header
-  class="w-full bg-slate-950 border-b border-slate-800 text-white sticky top-0 z-50"
->
-
-  <div
-    class="mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4"
-  >
+﻿<header class="header-shell">
+  <div class="header-inner mx-auto max-w-7xl flex items-center justify-between px-4 sm:px-6 lg:px-8 py-4">
 
     <!-- LOGO -->
-    <a
-      routerLink="/"
-      (click)="cerrarMenu()"
-      class="text-lg sm:text-xl font-bold tracking-wider hover:text-cyan-400 transition shrink-0"
-    >
-      DevPortfolio<span class="text-cyan-400">.</span>
+    <a routerLink="/" (click)="cerrarMenu()" class="header-logo">
+      <span class="logo-symbol">D</span>
+      <span class="logo-text">DevPortfolio HQ</span>
     </a>
 
-
     <!-- MENÚ ESCRITORIO -->
-    <nav
-      class="hidden lg:flex items-center gap-6 xl:gap-8"
-    >
-
-      <a
-        routerLink="/"
-        routerLinkActive="text-cyan-400"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="text-sm font-medium text-slate-300 hover:text-white transition"
-      >
-        Inicio
-      </a>
-
-      <a
-        routerLink="/programadores"
-        routerLinkActive="text-cyan-400"
-        class="text-sm font-medium text-slate-300 hover:text-white transition"
-      >
-        Programadores
-      </a>
-
-      <a
-        routerLink="/proyectos"
-        routerLinkActive="text-cyan-400"
-        class="text-sm font-medium text-slate-300 hover:text-white transition"
-      >
-        Proyectos
-      </a>
-
-      <a
-        routerLink="/servicios"
-        routerLinkActive="text-cyan-400"
-        class="text-sm font-medium text-slate-300 hover:text-white transition"
-      >
-        Servicios
-      </a>
-
-      <a
-        routerLink="/contact"
-        routerLinkActive="text-cyan-400"
-        class="text-sm font-medium text-slate-300 hover:text-white transition"
-      >
-        Contacto
-      </a>
-
+    <nav class="header-nav hidden lg:flex items-center gap-6 xl:gap-8">
+      <a routerLink="/" routerLinkActive="text-cyan-400 active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Inicio</a>
+      <a routerLink="/programadores" routerLinkActive="text-cyan-400 active-link" class="nav-link">Programadores</a>
+      <a routerLink="/proyectos" routerLinkActive="text-cyan-400 active-link" class="nav-link">Proyectos</a>
+      <a routerLink="/servicios" routerLinkActive="text-cyan-400 active-link" class="nav-link">Servicios</a>
+      <a routerLink="/contact" routerLinkActive="text-cyan-400 active-link" class="nav-link">Contacto</a>
     </nav>
 
-
-    <!-- USUARIO ESCRITORIO -->
-    <div class="hidden lg:flex items-center gap-3">
+    <div class="header-actions hidden lg:flex items-center gap-3">
+      <a routerLink="/contact" class="button button-primary">Contactar</a>
 
       @if (usuarioLogueado) {
 
         @if (!esProgramador) {
-
-          <a
-            routerLink="/mis-solicitudes"
-            routerLinkActive="text-cyan-400"
-            class="text-sm text-slate-300 hover:text-cyan-400 transition whitespace-nowrap"
-          >
-            Mis solicitudes
-          </a>
-
+          <a routerLink="/mis-solicitudes" routerLinkActive="text-cyan-400 active-link" class="nav-link">Mis solicitudes</a>
         }
 
         @if (esProgramador) {
-
-          <a
-            routerLink="/solicitudes-recibidas"
-            routerLinkActive="text-cyan-400"
-            class="text-sm text-slate-300 hover:text-cyan-400 transition whitespace-nowrap"
-          >
-            Solicitudes recibidas
-          </a>
-
+          <a routerLink="/solicitudes-recibidas" routerLinkActive="text-cyan-400 active-link" class="nav-link">Solicitudes recibidas</a>
         }
 
-        <span
-          class="hidden xl:inline-block max-w-44 truncate text-xs text-slate-400 bg-slate-900 border border-slate-800 px-3 py-2 rounded-full"
-        >
-          {{ usuarioLogueado.email }}
-        </span>
+        <span class="user-chip">{{ usuarioLogueado.email }}</span>
 
-        <button
-          type="button"
-          (click)="onLogout()"
-          class="px-4 py-2 bg-red-500 hover:bg-red-400 text-white rounded-xl font-semibold text-xs transition cursor-pointer active:scale-95 whitespace-nowrap"
-        >
-          Cerrar sesión
-        </button>
+        <button type="button" (click)="onLogout()" class="button button-ghost">Cerrar sesión</button>
 
       } @else {
 
-        <a
-          routerLink="/login"
-          class="px-4 py-2 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-xl font-semibold text-xs transition active:scale-95"
-        >
-          Ingresar
-        </a>
+        <a routerLink="/login" class="button button-secondary">Ingresar</a>
 
       }
-
     </div>
 
-
     <!-- BOTÓN HAMBURGUESA -->
-    <button
-      type="button"
-      (click)="alternarMenu()"
-      class="lg:hidden flex items-center justify-center w-11 h-11 rounded-xl border border-slate-700 bg-slate-900 hover:bg-slate-800 transition"
-      aria-label="Abrir menú"
-      [attr.aria-expanded]="menuAbierto"
-    >
-
+    <button type="button" (click)="alternarMenu()" class="mobile-toggle" aria-label="Abrir menú" [attr.aria-expanded]="menuAbierto">
       @if (!menuAbierto) {
-
-        <svg
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M4 6h16M4 12h16M4 18h16"
-          />
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
-
       } @else {
-
-        <svg
-          class="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M6 18L18 6M6 6l12 12"
-          />
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
         </svg>
-
       }
-
     </button>
-
   </div>
-
 
   <!-- MENÚ MÓVIL Y TABLET -->
   @if (menuAbierto) {
-
-    <div
-      class="lg:hidden border-t border-slate-800 bg-slate-950 px-4 sm:px-6 py-5"
-    >
-
-      <nav class="flex flex-col gap-2">
-
-        <a
-          routerLink="/"
-          (click)="cerrarMenu()"
-          routerLinkActive="bg-cyan-500/10 text-cyan-400"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition"
-        >
-          Inicio
-        </a>
-
-        <a
-          routerLink="/programadores"
-          (click)="cerrarMenu()"
-          routerLinkActive="bg-cyan-500/10 text-cyan-400"
-          class="px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition"
-        >
-          Programadores
-        </a>
-
-        <a
-          routerLink="/proyectos"
-          (click)="cerrarMenu()"
-          routerLinkActive="bg-cyan-500/10 text-cyan-400"
-          class="px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition"
-        >
-          Proyectos
-        </a>
-
-        <a
-          routerLink="/servicios"
-          (click)="cerrarMenu()"
-          routerLinkActive="bg-cyan-500/10 text-cyan-400"
-          class="px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition"
-        >
-          Servicios
-        </a>
-
-        <a
-          routerLink="/contact"
-          (click)="cerrarMenu()"
-          routerLinkActive="bg-cyan-500/10 text-cyan-400"
-          class="px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition"
-        >
-          Contacto
-        </a>
-
-
-        @if (usuarioLogueado) {
-
-          <div class="h-px bg-slate-800 my-2"></div>
-
-          @if (!esProgramador) {
-
-            <a
-              routerLink="/mis-solicitudes"
-              (click)="cerrarMenu()"
-              routerLinkActive="bg-cyan-500/10 text-cyan-400"
-              class="px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition"
-            >
-              Mis solicitudes
-            </a>
-
-          }
-
-          @if (esProgramador) {
-
-            <a
-              routerLink="/solicitudes-recibidas"
-              (click)="cerrarMenu()"
-              routerLinkActive="bg-cyan-500/10 text-cyan-400"
-              class="px-4 py-3 rounded-xl text-slate-300 hover:bg-slate-900 hover:text-white transition"
-            >
-              Solicitudes recibidas
-            </a>
-
-          }
-
-          <div
-            class="mt-2 px-4 py-3 rounded-xl bg-slate-900 border border-slate-800"
-          >
-            <p class="text-xs text-slate-500">
-              Sesión iniciada como
-            </p>
-
-            <p class="text-sm text-slate-300 truncate mt-1">
-              {{ usuarioLogueado.email }}
-            </p>
-          </div>
-
-          <button
-            type="button"
-            (click)="onLogout()"
-            class="mt-2 w-full bg-red-500 hover:bg-red-400 px-4 py-3 rounded-xl font-semibold transition"
-          >
-            Cerrar sesión
-          </button>
-
-        } @else {
-
-          <div class="h-px bg-slate-800 my-2"></div>
-
-          <a
-            routerLink="/login"
-            (click)="cerrarMenu()"
-            class="text-center bg-cyan-500 hover:bg-cyan-400 px-4 py-3 rounded-xl font-semibold transition text-slate-950"
-          >
-            Ingresar
-          </a>
-
-        }
-
+    <div class="mobile-menu lg:hidden">
+      <nav class="mobile-nav flex flex-col gap-3">
+        <a routerLink="/" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" [routerLinkActiveOptions]="{ exact: true }" class="mobile-link">Inicio</a>
+        <a routerLink="/programadores" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Programadores</a>
+        <a routerLink="/proyectos" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Proyectos</a>
+        <a routerLink="/servicios" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Servicios</a>
+        <a routerLink="/contact" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Contacto</a>
       </nav>
 
+      <div class="mobile-compact-actions mt-4 flex flex-col gap-3">
+        <a routerLink="/contact" (click)="cerrarMenu()" class="button button-primary w-full text-center">Contactar equipo</a>
+        @if (usuarioLogueado) {
+          @if (!esProgramador) {
+            <a routerLink="/mis-solicitudes" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Mis solicitudes</a>
+          }
+          @if (esProgramador) {
+            <a routerLink="/solicitudes-recibidas" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Solicitudes recibidas</a>
+          }
+          <button type="button" (click)="onLogout()" class="button button-ghost w-full">Cerrar sesión</button>
+        } @else {
+          <a routerLink="/login" (click)="cerrarMenu()" class="button button-secondary w-full text-center">Ingresar</a>
+        }
+      </div>
     </div>
-
   }
-
 </header>

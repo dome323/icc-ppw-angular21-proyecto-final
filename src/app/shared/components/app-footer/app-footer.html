@@ -1,43 +1,64 @@
-<footer class="w-full bg-slate-950 border-t border-slate-800 text-slate-400 py-12 mt-auto">
-  <div class="mx-auto max-w-7xl px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
-    
-    <div class="flex flex-col gap-3">
-      <a routerLink="/" class="text-xl font-bold tracking-wider text-white">
-        DevPortfolio<span class="text-pink-400">.</span>
+﻿<footer class="footer-shell">
+  <div class="footer-inner mx-auto max-w-7xl px-8 grid grid-cols-1 md:grid-cols-[1.7fr_1fr_1fr_1fr] gap-10">
+
+    <div class="footer-brand">
+      <a routerLink="/" class="footer-logo">
+        <span class="logo-symbol">D</span>
+        <span class="logo-text">DevPortfolio HQ</span>
       </a>
-      <p class="text-sm text-slate-400 leading-relaxed">
-        Transformamos ideas en soluciones digitales. Desarrollo web moderno, seguro y escalable.
+      <p class="footer-copy">
+        Convertimos desafíos empresariales en plataformas SaaS con diseño, seguridad e infraestructura optimizada para clientes exigentes.
       </p>
+      <div class="footer-contact">
+        <a href="mailto:contacto@devportfolio.ec" class="footer-contact-link">contacto@devportfolio.ec</a>
+        <a href="tel:+593981234567" class="footer-contact-link">+593 98 123 4567</a>
+      </div>
     </div>
 
-    <div>
-      <h4 class="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Navegación</h4>
-      <ul class="flex flex-col gap-2 text-sm">
-        <li><a routerLink="/" class="hover:text-pink-400 transition">Inicio</a></li>
-        <li><a routerLink="/proyectos" class="hover:text-pink-400 transition">Proyectos</a></li>
+    <div class="footer-section">
+      <h4 class="footer-section-title">Navegación</h4>
+      <ul class="footer-list">
+        <li><a routerLink="/" class="footer-link">Inicio</a></li>
+        <li><a routerLink="/programadores" class="footer-link">Programadores</a></li>
+        <li><a routerLink="/proyectos" class="footer-link">Proyectos</a></li>
+        <li><a routerLink="/servicios" class="footer-link">Servicios</a></li>
       </ul>
     </div>
 
-    <div>
-      <h4 class="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Michelle Uyunkar</h4>
-      <ul class="flex flex-col gap-2 text-sm">
-        <li><a href="https://github.com/michelle-uyunkar" target="_blank" class="hover:text-pink-400 transition">GitHub</a></li>
-        <li><a href="https://linkedin.com/in/michelle-uyunkar" target="_blank" class="hover:text-pink-400 transition">LinkedIn</a></li>
+    <div class="footer-section">
+      <h4 class="footer-section-title">Servicios</h4>
+      <ul class="footer-list">
+        <li><a routerLink="/servicios" class="footer-link">Consultoría TI</a></li>
+        <li><a routerLink="/proyectos" class="footer-link">Desarrollo Full Stack</a></li>
+        <li><a routerLink="/contact" class="footer-link">Infraestructura Cloud</a></li>
       </ul>
     </div>
 
-    <div>
-      <h4 class="text-white font-semibold mb-4 text-sm tracking-wider uppercase">Josué Garcia</h4>
-      <ul class="flex flex-col gap-2 text-sm">
-        <li><a href="https://github.com/josue-garcia" target="_blank" class="hover:text-pink-400 transition">GitHub</a></li>
-        <li><a href="https://linkedin.com/in/josue-garcia" target="_blank" class="hover:text-pink-400 transition">LinkedIn</a></li>
-      </ul>
+    <div class="footer-section footer-social-panel">
+      <h4 class="footer-section-title">Equipo</h4>
+      <div class="person-card">
+        <p class="person-name">Josue Valdez</p>
+        <div class="social-row">
+          <a href="https://github.com/josue-garcia" target="_blank" class="social-link" aria-label="GitHub Josue Valdez">GitHub</a>
+          <a href="https://linkedin.com/in/josue-garcia" target="_blank" class="social-link" aria-label="LinkedIn Josue Valdez">LinkedIn</a>
+        </div>
+      </div>
+      <div class="person-card">
+        <p class="person-name">Domenica Uyunkar</p>
+        <div class="social-row">
+          <a href="https://github.com/michelle-uyunkar" target="_blank" class="social-link" aria-label="GitHub Domenica Uyunkar">GitHub</a>
+          <a href="https://linkedin.com/in/michelle-uyunkar" target="_blank" class="social-link" aria-label="LinkedIn Domenica Uyunkar">LinkedIn</a>
+        </div>
+      </div>
+      <div class="footer-cta">
+        <a routerLink="/contact" class="button button-primary">Agenda una demo</a>
+      </div>
     </div>
 
   </div>
 
-  <div class="mx-auto max-w-7xl px-8 border-t border-slate-900 mt-8 pt-6 flex flex-col md:flex-row justify-between items-center text-xs gap-2">
-    <p>&copy; 2026 DevPortfolio Solutions. Todos los derechos reservados.</p>
-    <p class="text-slate-500">Desarrollado con Angular y Firebase</p>
+  <div class="footer-base mx-auto max-w-7xl px-8">
+    <p>© 2026 DevPortfolio Solutions. Todos los derechos reservados.</p>
+    <p>Angular · Firebase · Infraestructura empresarial</p>
   </div>
 </footer>

@@ -50,21 +50,58 @@
         </div>
       </div>
 
-      <div class="cards-grid">
-        <article *ngFor="let programador of programadores" class="feature-card reveal reveal-delay-1">
-          <div class="feature-card__avatar">
-            <img [src]="'http://localhost:1337' + programador.foto.url" [alt]="programador.nombre" />
-          </div>
-          <div class="feature-card__body">
-            <h3>{{ programador.nombre }}</h3>
-            <p class="feature-tag">{{ programador.especialidad }}</p>
-            <p>{{ programador.descripcionBreve }}</p>
-            <div class="feature-links">
-              <a [href]="programador.github" target="_blank">GitHub</a>
-              <a [href]="programador.linkedin" target="_blank">LinkedIn</a>
+      <div class="home-team-layout">
+        <div class="cards-grid">
+          <article *ngFor="let programador of programadores" class="feature-card reveal reveal-delay-1"
+            (mouseenter)="setHover(programador)" (mouseleave)="clearHover()">
+            <div class="feature-card__avatar">
+              <img [src]="'http://localhost:1337' + programador.foto.url" [alt]="programador.nombre" />
             </div>
+            <div class="feature-card__body">
+              <h3>{{ programador.nombre }}</h3>
+              <p class="feature-tag">{{ programador.especialidad }}</p>
+              <p>{{ programador.descripcionBreve }}</p>
+              <div class="feature-links">
+                <a [href]="programador.github" target="_blank">GitHub</a>
+                <a [href]="programador.linkedin" target="_blank">LinkedIn</a>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <aside class="hover-panel" [class.active]="hoveredProgramador">
+          <div class="hover-panel__card">
+            <p class="hover-panel__eyebrow">Equipo RPG</p>
+            <h3>{{ hoveredProgramador?.nombre || 'Build de equipo' }}</h3>
+            <p class="hover-panel__subtitle">
+              {{ hoveredProgramador?.role || 'Pasa el cursor sobre un perfil para revelar estadísticas premium.' }}
+            </p>
+
+            <ng-container *ngIf="hoveredProgramador; else hoverHint">
+              <span class="hover-panel__level">LEVEL {{ hoveredProgramador.level }}</span>
+              <div class="hover-panel__chips">
+                <span class="panel-chip">{{ hoveredProgramador.badge }}</span>
+                <span class="panel-chip">Puntuación 7/7</span>
+              </div>
+
+              <div class="skill-list">
+                <div class="skill-row" *ngFor="let skill of hoveredProgramador.skills">
+                  <div class="skill-meta">
+                    <span>{{ skill.label }}</span>
+                    <strong>{{ skill.value }}/10</strong>
+                  </div>
+                  <div class="skill-bar">
+                    <div class="skill-fill" [style.width.%]="skill.value * 100 / 10"></div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+
+            <ng-template #hoverHint>
+              <p class="hover-panel__hint">Desplaza el cursor sobre una tarjeta para activar el panel flotante de estadísticas.</p>
+            </ng-template>
           </div>
-        </article>
+        </aside>
       </div>
     </section>
 

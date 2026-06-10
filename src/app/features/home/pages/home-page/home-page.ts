@@ -20,6 +20,39 @@ export class HomePageComponent implements OnInit {
   programadores: any[] = [];
   proyectos: any[] = [];
   servicios: any[] = [];
+  hoveredProgramador: any = null;
+
+  private teamStats: Record<string, {
+    level: number;
+    badge: string;
+    role: string;
+    skills: { label: string; value: number }[];
+  }> = {
+    'Josue Valdez': {
+      level: 48,
+      badge: 'Enterprise Dev & Network Engineer',
+      role: 'Full Stack Dev & Network Engineer',
+      skills: [
+        { label: 'Backend & DB (Java / Oracle SQL)', value: 9 },
+        { label: 'Frontend Frameworks (Angular / React)', value: 8 },
+        { label: 'Networks & Infrastructure (Cisco Routing)', value: 8 },
+        { label: 'Cybersecurity & Monitoring (Snort / Nagios)', value: 8 },
+        { label: 'Cloud Architecture (Cloudflare / Hostinger Deployment)', value: 8 },
+        { label: 'Business Automation & AI Integrations', value: 7 }
+      ]
+    },
+    'Domenica Uyunkar': {
+      level: 43,
+      badge: 'Frontend Tactical Specialist',
+      role: 'Cisco / UI Performance',
+      skills: [
+        { label: 'Frontend Frameworks (Angular / React)', value: 9 },
+        { label: 'Networks & Infrastructure (Cisco Routing)', value: 8 },
+        { label: 'Cybersecurity & Monitoring (Snort / Nagios)', value: 8 },
+        { label: 'Cloud Architecture (Cloudflare / Hostinger Deployment)', value: 8 }
+      ]
+    }
+  };
 
   constructor(
     private strapiService: StrapiService,
@@ -28,27 +61,45 @@ export class HomePageComponent implements OnInit {
 
   async ngOnInit() {
 
-  const programadoresResponse: any =
-    await this.strapiService.getProgramadores();
+    const programadoresResponse: any =
+      await this.strapiService.getProgramadores();
 
-  this.programadores =
-    programadoresResponse.data;
+    this.programadores =
+      programadoresResponse.data;
 
-  const proyectosResponse: any =
-    await this.strapiService.getProyectos();
+    const proyectosResponse: any =
+      await this.strapiService.getProyectos();
 
-  this.proyectos = proyectosResponse.data.filter(
-    (proyecto: any) => proyecto.destacado === true
-  );
+    this.proyectos = proyectosResponse.data.filter(
+      (proyecto: any) => proyecto.destacado === true
+    );
 
-  const serviciosResponse: any =
-    await this.strapiService.getServicios();
+    const serviciosResponse: any =
+      await this.strapiService.getServicios();
 
-  this.servicios =
-    serviciosResponse.data;
+    this.servicios = serviciosResponse.data;
 
-  this.cd.detectChanges();
+    this.cd.detectChanges();
 
-}
+  }
+
+  setHover(programador: any) {
+    const stats = this.teamStats[programador.nombre] || {
+      level: 41,
+      badge: 'Technical Specialist',
+      role: programador.especialidad || 'Equipo Premium',
+      skills: [
+        { label: 'Backend & DB (Java / Oracle SQL)', value: 8 },
+        { label: 'Frontend Frameworks (Angular / React)', value: 8 },
+        { label: 'Networks & Infrastructure (Cisco Routing)', value: 8 },
+        { label: 'Cloud Architecture (Cloudflare / Hostinger Deployment)', value: 8 }
+      ]
+    };
+    this.hoveredProgramador = { ...programador, ...stats };
+  }
+
+  clearHover() {
+    this.hoveredProgramador = null;
+  }
 
 }

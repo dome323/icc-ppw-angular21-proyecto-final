@@ -229,9 +229,122 @@
   grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
 }
 
+.home-team-layout {
+  display: grid;
+  gap: 1.75rem;
+}
+
+.hover-panel {
+  position: relative;
+  min-height: 24rem;
+  border-radius: 2rem;
+  background: rgba(15,23,42,0.75);
+  border: 1px solid rgba(56,189,248,0.14);
+  box-shadow: 0 30px 80px rgba(8,15,31,0.24);
+  overflow: hidden;
+  transition: transform 0.32s ease, border-color 0.32s ease, background 0.32s ease;
+}
+
+.hover-panel__card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 2rem;
+  gap: 1.5rem;
+}
+
+.hover-panel__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.65rem 1rem;
+  border-radius: 999px;
+  background: rgba(56,189,248,0.14);
+  color: var(--holo-cyan);
+  letter-spacing: 0.14em;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.hover-panel__subtitle {
+  color: #cbd5e1;
+  line-height: 1.75;
+}
+
+.hover-panel__level {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.2rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(56,189,248,0.22), rgba(34,211,238,0.16));
+  color: #e0f7ff;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.hover-panel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.panel-chip {
+  padding: 0.7rem 0.95rem;
+  border-radius: 999px;
+  background: rgba(15,23,42,0.86);
+  border: 1px solid rgba(56,189,248,0.16);
+  color: #9df0ff;
+  font-size: 0.85rem;
+}
+
+.skill-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.skill-row {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.skill-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #cbd5e1;
+  font-size: 0.95rem;
+}
+
+.skill-bar {
+  position: relative;
+  height: 0.95rem;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  overflow: hidden;
+}
+
+.skill-fill {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--holo-cyan), var(--holo-teal));
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.7s ease, width 0.7s ease;
+}
+
+.hover-panel.active .skill-fill {
+  transform: scaleX(1);
+}
+
 @media (min-width: 1024px) {
   .cards-grid {
     justify-items: start;
+  }
+
+  .home-team-layout {
+    grid-template-columns: minmax(0, 1.6fr) minmax(22rem, 1fr);
+    align-items: start;
   }
 }
 
