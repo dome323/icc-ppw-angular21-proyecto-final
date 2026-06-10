@@ -88,19 +88,16 @@ const translations: Record<string, any> = {
     programadores: {
       section: 'Programadores · Equipo Elite',
       title: 'Nuestro Equipo Premium',
-      copy: 'Un estilo visual inspirado en interfaces holográficas, alto brillo y experiencia RPG profesional.',
       total: 'Total programadores: {{count}}'
     },
     services: {
       section: 'Servicios · Experiencia Premium',
       title: 'Nuestros Servicios',
-      copy: 'Una presentación visual renovada con glassmorphism, holo shimmer, hover lift y animaciones suaves para cada tarjeta.',
       total: 'Total servicios: {{count}}'
     },
     projects: {
       section: 'Proyectos · Portafolio Premium',
       title: 'Nuestros Proyectos',
-      copy: 'Interfaz holográfica con tarjetas premium, filtros tipo pills y microinteracciones suaves.',
       meta: {
         showing: 'Mostrando {{current}} de {{total}}',
         all: 'Todos los proyectos'

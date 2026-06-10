@@ -1,34 +1,80 @@
 <app-header></app-header>
 
 <section class="servicios-shell min-h-screen py-20 px-6 overflow-hidden">
+
   <div class="shell-glow"></div>
 
   <div class="max-w-7xl mx-auto relative">
+
     <header class="servicios-head text-center mb-12">
-      <span class="servicios-badge">Servicios · Experiencia Premium</span>
-      <h1 class="servicios-title">Nuestros Servicios</h1>
-      <p class="servicios-copy">
-        Una presentación visual renovada con glassmorphism, holo shimmer, hover lift y animaciones suaves para cada tarjeta.
-      </p>
-      <div class="servicios-count">Total servicios: <strong>{{ servicios.length }}</strong></div>
+
+      <span class="servicios-badge">
+        Servicios · Experiencia Premium
+      </span>
+
+      <h1 class="servicios-title">
+        Nuestros Servicios
+      </h1>
+
+      <div class="servicios-count">
+        Total servicios:
+        <strong>
+          {{ serviceCards.length }}
+        </strong>
+      </div>
+
     </header>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      <article *ngFor="let servicio of servicios" class="servicio-card group">
+
+    <div
+      *ngIf="serviceCards.length > 0"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+    >
+
+      <article
+        *ngFor="let servicio of serviceCards"
+        class="servicio-card group"
+      >
+
         <div class="card-glow"></div>
         <div class="card-shimmer"></div>
 
         <div class="card-top">
-          <span class="card-chip">Servicio</span>
-          <h2>{{ servicio.nombre }}</h2>
+
+          <span class="card-chip">
+            Servicio
+          </span>
+
+          <h2>
+            {{ servicio.nombre }}
+          </h2>
+
         </div>
 
         <p class="card-description">
           {{ servicio.descripcion }}
         </p>
+
       </article>
+
     </div>
+
+
+    <div
+      *ngIf="serviceCards.length === 0"
+      class="mt-12 rounded-3xl border border-slate-800 bg-slate-900 p-10 text-center"
+    >
+      <h2 class="text-2xl font-bold">
+        No hay servicios disponibles
+      </h2>
+
+      <p class="text-slate-400 mt-3">
+        Los servicios publicados en Strapi aparecerán aquí.
+      </p>
+    </div>
+
   </div>
+
 </section>
 
 <app-footer></app-footer>
