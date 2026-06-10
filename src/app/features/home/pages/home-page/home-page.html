@@ -1,288 +1,111 @@
-<div class="min-h-screen bg-slate-950 text-white flex flex-col">
-
+﻿<div class="home-shell min-h-screen text-white flex flex-col">
   <app-header></app-header>
 
-
   <main class="grow">
+    <section class="home-hero overflow-hidden">
+      <div class="home-hero__backdrop"></div>
+      <div class="home-hero__glow"></div>
+      <div class="home-hero__lines"></div>
 
+      <div class="home-hero__content">
+        <p class="hero-eyebrow reveal reveal-delay-1">Agencia tecnológica · Ecuador</p>
 
-    <!-- HERO -->
-    <section
-      class="w-full bg-linear-to-br from-slate-950 via-slate-900 to-slate-800 py-24 px-8"
-    >
-
-      <div class="max-w-7xl mx-auto text-center">
-
-
-        <p
-          class="inline-block mb-4 rounded-full border border-pink-400/30 bg-pink-400/10 px-4 py-2 text-sm text-pink-300 font-medium"
-        >
-          Portafolio Web Angular 21
-        </p>
-
-
-        <h1
-          class="max-w-4xl mx-auto text-5xl md:text-7xl font-black leading-tight"
-        >
-          Creamos experiencias
-          <span class="text-pink-400">modernas</span>
-          para la web
+        <h1 class="hero-title reveal reveal-delay-2">
+          Construimos software
+          <span class="hero-gradient">que las empresas confían.</span>
         </h1>
 
-
-        <p
-          class="mt-8 max-w-2xl mx-auto text-lg text-slate-400 leading-relaxed"
-        >
-          Somos un equipo apasionado por el desarrollo web, diseño moderno y
-          experiencias digitales utilizando Angular, TailwindCSS y tecnologías
-          actuales.
+        <p class="hero-copy reveal reveal-delay-3">
+          Agencia boutique enfocada en soluciones digitales corporativas con experiencia en
+          desarrollos Angular, portales empresariales y productos de alto impacto.
         </p>
 
-
-        <div class="mt-10 flex justify-center gap-5 flex-wrap">
-
-
-          <button
-            routerLink="/proyectos"
-            class="rounded-2xl bg-pink-500 hover:bg-pink-400 px-8 py-4 font-semibold"
-          >
-            Ver Proyectos
-          </button>
-
-
-          <button
-            routerLink="/contact"
-            class="rounded-2xl border border-slate-700 px-8 py-4 font-semibold"
-          >
-            Contactarnos
-          </button>
-
-
+        <div class="hero-actions reveal reveal-delay-4">
+          <a routerLink="/proyectos" class="button button-holo">Ver proyectos</a>
+          <a routerLink="/contact" class="button button-glass">Contactarnos</a>
         </div>
 
-
+        <div class="stats-grid reveal reveal-delay-5">
+          <article class="stat-card">
+            <span class="stat-value">{{ programadores.length }}</span>
+            <span class="stat-label">Expertos en plantilla</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-value">{{ proyectos.length }}</span>
+            <span class="stat-label">Proyectos destacados</span>
+          </article>
+          <article class="stat-card">
+            <span class="stat-value">{{ servicios.length }}</span>
+            <span class="stat-label">Servicios listos</span>
+          </article>
+        </div>
       </div>
-
     </section>
 
+    <section class="home-section">
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">Equipo</span>
+          <h2>Una experiencia de producto premium con enfoque técnico.</h2>
+        </div>
+      </div>
 
-
-
-
-    <!-- EQUIPO -->
-    <section class="bg-slate-900 py-20 px-8">
-
-
-      <div class="max-w-6xl mx-auto">
-
-
-        <h2 class="text-4xl font-bold text-center mb-12">
-          Nuestro Equipo
-        </h2>
-
-
-
-        <div
-          *ngFor="let programador of programadores"
-          class="bg-slate-800 rounded-3xl p-8 shadow-lg mb-8"
-        >
-
-
-          <div class="flex flex-col md:flex-row gap-8 items-center">
-
-
-            <img
-              [src]="'http://localhost:1337' + programador.foto.url"
-              [alt]="programador.nombre"
-              class="w-48 h-48 object-cover rounded-full border-4 border-pink-500"
-            >
-
-
-
-            <div>
-
-
-              <h3 class="text-3xl font-bold">
-                {{ programador.nombre }}
-              </h3>
-
-
-              <p class="text-pink-400 font-semibold mt-2">
-                {{ programador.especialidad }}
-              </p>
-
-
-              <p class="text-slate-300 mt-4">
-                {{ programador.descripcionBreve }}
-              </p>
-
-
-              <p class="text-slate-400 mt-4">
-                {{ programador.correo }}
-              </p>
-
-
-
-              <div class="flex gap-4 mt-6">
-
-
-                <a
-                  [href]="programador.github"
-                  target="_blank"
-                  class="bg-slate-700 px-4 py-2 rounded-xl"
-                >
-                  GitHub
-                </a>
-
-
-                <a
-                  [href]="programador.linkedin"
-                  target="_blank"
-                  class="bg-blue-600 px-4 py-2 rounded-xl"
-                >
-                  LinkedIn
-                </a>
-
-
-              </div>
-
-
+      <div class="cards-grid">
+        <article *ngFor="let programador of programadores" class="feature-card reveal reveal-delay-1">
+          <div class="feature-card__avatar">
+            <img [src]="'http://localhost:1337' + programador.foto.url" [alt]="programador.nombre" />
+          </div>
+          <div class="feature-card__body">
+            <h3>{{ programador.nombre }}</h3>
+            <p class="feature-tag">{{ programador.especialidad }}</p>
+            <p>{{ programador.descripcionBreve }}</p>
+            <div class="feature-links">
+              <a [href]="programador.github" target="_blank">GitHub</a>
+              <a [href]="programador.linkedin" target="_blank">LinkedIn</a>
             </div>
-
-
           </div>
-
-
-        </div>
-
-
+        </article>
       </div>
-
-
     </section>
 
-
-
-
-
-
-
-    <!-- PROYECTOS -->
-    <section class="bg-slate-950 py-20 px-8">
-
-
-      <div class="max-w-7xl mx-auto">
-
-
-        <h2 class="text-4xl font-bold text-center mb-12">
-          Proyectos Destacados
-        </h2>
-
-
-
-        <div class="grid md:grid-cols-3 gap-8">
-
-
-
-          <div
-            *ngFor="let proyecto of proyectos"
-            class="bg-slate-900 p-6 rounded-2xl border border-slate-800"
-          >
-
-
-            <h3 class="text-2xl font-bold">
-              {{ proyecto.nombre }}
-            </h3>
-
-
-            <p class="text-slate-400 mt-4">
-              {{ proyecto.descripcionBreve }}
-            </p>
-
-
-            <p class="text-pink-400 mt-4">
-              {{ proyecto.tecnologias }}
-            </p>
-
-
-          </div>
-
-
-
+    <section class="home-section home-section--dark">
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">Proyectos</span>
+          <h2>Casos visibles con impacto real en producto y diseño.</h2>
         </div>
-
-
       </div>
 
-
+      <div class="cards-grid">
+        <article *ngFor="let proyecto of proyectos" class="feature-card reveal reveal-delay-2">
+          <div class="feature-card__badge">Propuesta</div>
+          <div class="feature-card__body">
+            <h3>{{ proyecto.nombre }}</h3>
+            <p>{{ proyecto.descripcionBreve }}</p>
+            <p class="feature-meta">{{ proyecto.tecnologias }}</p>
+          </div>
+        </article>
+      </div>
     </section>
 
-
-
-
-
-
-
-    <!-- SERVICIOS -->
-    <section class="bg-slate-900 py-20 px-8">
-
-
-      <div class="max-w-7xl mx-auto">
-
-
-
-        <h2 class="text-4xl font-bold text-center mb-12">
-          Nuestros Servicios
-        </h2>
-
-
-
-
-        <div class="grid md:grid-cols-3 gap-8">
-
-
-
-          <div
-            *ngFor="let servicio of servicios"
-            class="bg-slate-800 p-6 rounded-2xl"
-          >
-
-
-
-            <h3 class="text-2xl font-bold">
-              {{ servicio.nombre }}
-            </h3>
-
-
-
-            <p class="text-slate-400 mt-4">
-              {{ servicio.descripcion }}
-            </p>
-
-
-
-          </div>
-
-
-
+    <section class="home-section">
+      <div class="section-header">
+        <div>
+          <span class="section-eyebrow">Servicios</span>
+          <h2>Soluciones pensadas para equipos que buscan escalar con seguridad.</h2>
         </div>
-
-
-
       </div>
 
-
-
+      <div class="cards-grid">
+        <article *ngFor="let servicio of servicios" class="feature-card reveal reveal-delay-3">
+          <div class="feature-card__body">
+            <h3>{{ servicio.nombre }}</h3>
+            <p>{{ servicio.descripcion }}</p>
+          </div>
+        </article>
+      </div>
     </section>
-
-
-
   </main>
 
-
-
-
   <app-footer></app-footer>
-
-
 </div>

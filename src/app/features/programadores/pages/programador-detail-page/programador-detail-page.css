@@ -1,7 +1,10 @@
 .detail-shell {
   position: relative;
-  background: radial-gradient(circle at 15% 20%, rgba(248, 113, 113, 0.16), transparent 20%),
-    radial-gradient(circle at 80% 10%, rgba(59, 130, 246, 0.12), transparent 18%),
+  --holo-cyan: #38bdf8;
+  --holo-teal: #22d3ee;
+  --holo-slate: #0f766e;
+  background: radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.16), transparent 20%),
+    radial-gradient(circle at 80% 10%, rgba(34, 211, 238, 0.12), transparent 18%),
     linear-gradient(180deg, #020517 0%, #0b1224 100%);
   color: #e2e8f0;
 }
@@ -10,8 +13,8 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(circle at 50% 0%, rgba(249, 115, 22, 0.14), transparent 18%),
-    radial-gradient(circle at 15% 70%, rgba(59, 130, 246, 0.12), transparent 18%);
+  background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.14), transparent 18%),
+    radial-gradient(circle at 15% 70%, rgba(34, 211, 238, 0.12), transparent 18%);
   filter: blur(70px);
   opacity: 0.85;
 }
@@ -50,8 +53,8 @@
   margin: 0 auto;
   border-radius: 2rem;
   padding: 0.75rem;
-  background: rgba(248, 113, 113, 0.12);
-  border: 1px solid rgba(248, 113, 113, 0.18);
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.18);
 }
 
 .hero-avatar {
@@ -60,7 +63,7 @@
   object-fit: cover;
   border-radius: 1.75rem;
   border: 3px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 20px 60px rgba(248, 113, 113, 0.18);
+  box-shadow: 0 20px 60px rgba(56, 189, 248, 0.18);
 }
 
 .avatar-glow {
@@ -83,7 +86,7 @@
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 999px;
-  color: #f9a8d4;
+  color: #38bdf8;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -98,7 +101,7 @@
 
 .hero-role {
   font-size: 1.15rem;
-  color: #fda4af;
+  color: #38bdf8;
   font-weight: 600;
 }
 
@@ -208,7 +211,7 @@
   padding: 0.55rem 1rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
-  color: #f472b6;
+  color: #22d3ee;
   text-transform: uppercase;
   font-size: 0.8rem;
   letter-spacing: 0.08em;
@@ -259,7 +262,7 @@
   width: 0;
   height: 100%;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(248, 113, 113, 0.95), rgba(59, 130, 246, 0.95));
+  background: linear-gradient(90deg, rgba(56, 189, 248, 0.95), rgba(34, 211, 238, 0.95));
   animation: fill-bar 1.4s ease forwards;
   animation-delay: 0.2s;
   transform-origin: left;
@@ -292,7 +295,7 @@
 
 .project-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(248, 113, 113, 0.38);
+  border-color: rgba(56, 189, 248, 0.38);
 }
 
 .project-chip {
@@ -300,7 +303,7 @@
   padding: 0.5rem 0.9rem;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.05);
-  color: #f9a8d4;
+  color: #38bdf8;
   font-size: 0.78rem;
   margin-bottom: 0.95rem;
 }
