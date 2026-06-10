@@ -6,6 +6,7 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { StrapiService } from '../../../../core/services/strapi/strapi.service';
 import { HeaderComponent } from '../../../../shared/components/app-header/app-header';
 import { FooterComponent } from '../../../../shared/components/app-footer/app-footer';
+import { TiltDirective } from '../tilt.directive';
 
 @Component({
   selector: 'app-programador-detail-page',
@@ -14,7 +15,8 @@ import { FooterComponent } from '../../../../shared/components/app-footer/app-fo
     CommonModule,
     RouterModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    TiltDirective
   ],
   templateUrl: './programador-detail-page.html',
   styleUrl: './programador-detail-page.css'

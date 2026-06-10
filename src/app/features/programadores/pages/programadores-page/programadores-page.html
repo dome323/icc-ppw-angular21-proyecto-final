@@ -1,53 +1,51 @@
 <app-header></app-header>
 
-<section class="min-h-screen bg-slate-950 text-white py-20 px-8">
+<section class="page-shell min-h-screen py-20 px-6 overflow-hidden">
+  <div class="page-glow"></div>
+  <div class="max-w-7xl mx-auto relative">
 
-  <div class="max-w-7xl mx-auto">
-
-    <h1 class="text-5xl font-bold text-center mb-12">
-      Nuestro Equipo
-    </h1>
-
-    <p class="text-center text-green-400 mb-10">
-  Total programadores: {{ programadores.length }}
-</p>
-
+    <header class="section-header mb-12 text-center">
+      <span class="section-label">Programadores · Equipo Elite</span>
+      <h1 class="section-title">Nuestro Equipo Premium</h1>
+      <p class="section-copy">
+        Un estilo visual inspirado en interfaces holográficas, alto brillo y experiencia RPG profesional.
+      </p>
+      <div class="stat-badge">Total programadores: <strong>{{ programadores.length }}</strong></div>
+    </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-
       <a
         *ngFor="let programador of programadores"
         [routerLink]="['/programadores', programador.slug]"
-        class="bg-slate-900 rounded-3xl p-8 border border-slate-800 block hover:border-pink-500 transition"
-        >
-        <div class="flex flex-col items-center text-center">
+        class="holo-card group"
+        appTilt
+      >
+        <div class="card-deco"></div>
 
-          <img
-            [src]="'http://localhost:1337' + programador.foto.url"
-            [alt]="programador.nombre"
-            class="w-40 h-40 object-cover rounded-full border-4 border-pink-500 mb-6"
-          >
-
-          <h2 class="text-3xl font-bold">
-            {{ programador.nombre }}
-          </h2>
-
-          <p class="text-pink-400 mt-2">
-            {{ programador.especialidad }}
-          </p>
-
-          <p class="text-slate-400 mt-4">
-            {{ programador.descripcionBreve }}
-          </p>
-
+        <div class="card-top">
+          <div class="avatar-ring">
+            <img
+              [src]="'http://localhost:1337' + programador.foto.url"
+              [alt]="programador.nombre"
+              class="avatar"
+            />
+          </div>
+          <div class="card-heading">
+            <h2>{{ programador.nombre }}</h2>
+            <p class="subtitle">{{ programador.especialidad }}</p>
+          </div>
         </div>
 
-    </a>
+        <p class="description">{{ programador.descripcionBreve }}</p>
 
+        <div class="tags-row">
+          <span class="tag">Holo Card</span>
+          <span class="tag">Glassmorphism</span>
+          <span class="tag">Premium</span>
+        </div>
+      </a>
     </div>
-
   </div>
-
 </section>
 
 <app-footer></app-footer>

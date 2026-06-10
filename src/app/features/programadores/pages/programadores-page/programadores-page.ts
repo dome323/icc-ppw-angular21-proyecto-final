@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 
 import { HeaderComponent } from '../../../../shared/components/app-header/app-header';
 import { FooterComponent } from '../../../../shared/components/app-footer/app-footer';
+import { TiltDirective } from '../tilt.directive';
 
 import { StrapiService } from '../../../../core/services/strapi/strapi.service';
 
@@ -15,7 +16,8 @@ import { StrapiService } from '../../../../core/services/strapi/strapi.service';
     CommonModule,
     RouterModule,
     HeaderComponent,
-    FooterComponent
+    FooterComponent,
+    TiltDirective
   ],
   templateUrl: './programadores-page.html',
   styleUrl: './programadores-page.css'

@@ -1,155 +1,124 @@
 <app-header></app-header>
 
-<section class="min-h-screen bg-slate-950 text-white py-20 px-8">
+<section class="detail-shell min-h-screen py-20 px-6 overflow-hidden">
+  <div class="detail-glow"></div>
 
-  <!-- CARGANDO -->
-  <div
-    *ngIf="!programador"
-    class="max-w-5xl mx-auto text-center text-slate-400 py-20"
-  >
+  <div *ngIf="!programador" class="max-w-5xl mx-auto text-center text-slate-400 py-20">
     Cargando perfil...
   </div>
 
-  <!-- PERFIL COMPLETO -->
-  <div
-    *ngIf="programador"
-    class="max-w-5xl mx-auto"
-  >
+  <div *ngIf="programador" class="max-w-6xl mx-auto space-y-10">
 
-    <!-- INFORMACIÓN DEL PROGRAMADOR -->
-    <div class="bg-slate-900 rounded-3xl p-10 border border-slate-800">
+    <article class="hero-panel" appTilt>
+      <div class="hero-overlay"></div>
+      <div class="hero-grid">
 
-      <div class="flex flex-col md:flex-row gap-10 items-center">
+        <div class="hero-avatar-frame">
+          <img
+            *ngIf="programador.foto?.url"
+            [src]="'http://localhost:1337' + programador.foto.url"
+            [alt]="programador.nombre"
+            class="hero-avatar"
+          />
+          <div class="avatar-glow"></div>
+        </div>
 
-        <img
-          *ngIf="programador.foto?.url"
-          [src]="'http://localhost:1337' + programador.foto.url"
-          [alt]="programador.nombre"
-          class="w-64 h-64 rounded-full object-cover border-4 border-pink-500"
-        >
+        <div class="hero-content">
+          <span class="hero-subtitle">Líder Técnico</span>
+          <h1 class="hero-title">{{ programador.nombre }}</h1>
+          <p class="hero-role">{{ programador.especialidad }}</p>
+          <p class="hero-copy">{{ programador.descripcionBreve }}</p>
 
-        <div class="flex-1">
+          <div class="hero-links">
+            <span class="hero-chip">{{ programador.especialidad }}</span>
+            <span class="hero-chip">{{ programador.proyectos?.length || 0 }} proyectos</span>
+          </div>
 
-          <h1 class="text-4xl md:text-5xl font-bold">
-            {{ programador.nombre }}
-          </h1>
-
-          <p class="text-pink-400 text-xl mt-3">
-            {{ programador.especialidad }}
-          </p>
-
-          <p class="mt-6 text-slate-300">
-            {{ programador.descripcionBreve }}
-          </p>
-
-          <p class="mt-6 text-slate-400">
-            {{ programador.correo }}
-          </p>
-
-          <div class="flex flex-wrap gap-4 mt-6">
-
+          <div class="hero-actions">
             <a
               *ngIf="programador.github"
               [href]="programador.github"
               target="_blank"
               rel="noopener noreferrer"
-              class="bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-xl transition"
-            >
-              GitHub
-            </a>
-
+              class="hero-button github"
+            >GitHub</a>
             <a
               *ngIf="programador.linkedin"
               [href]="programador.linkedin"
               target="_blank"
               rel="noopener noreferrer"
-              class="bg-blue-600 hover:bg-blue-500 px-4 py-2 rounded-xl transition"
-            >
-              LinkedIn
-            </a>
-
+              class="hero-button linkedin"
+            >LinkedIn</a>
           </div>
 
+          <div class="hero-stats">
+            <div class="stat-card">
+              <span>Proyectos</span>
+              <strong>{{ programador.proyectos?.length || 0 }}</strong>
+            </div>
+            <div class="stat-card">
+              <span>Contacto</span>
+              <strong>{{ programador.correo || 'N/A' }}</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <section class="detail-body grid gap-10 lg:grid-cols-[1.4fr_0.9fr]">
+      <div class="glass-panel">
+        <div class="panel-header">
+          <span class="panel-tag">Resumen</span>
+          <h2>Sobre el programador</h2>
+        </div>
+        <p class="panel-text whitespace-pre-line">{{ obtenerTextoCompleto(programador.descripcionCompleta) }}</p>
+
+        <div *ngIf="programador.habilidades?.length" class="skills-panel">
+          <div class="panel-header">
+            <span class="panel-tag">Habilidades</span>
+            <h2>Barra de dominio</h2>
+          </div>
+
+          <div class="skill-list">
+            <div *ngFor="let habilidad of programador.habilidades" class="skill-row">
+              <div class="skill-meta">
+                <span>{{ habilidad.nombre || habilidad }}</span>
+                <strong>{{ habilidad.porcentaje || 88 }}%</strong>
+              </div>
+              <div class="skill-bar">
+                <div class="skill-fill" [style.--target]="(habilidad.porcentaje || 88) + '%'" ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="glass-panel project-panel">
+        <div class="panel-header">
+          <span class="panel-tag">Proyectos</span>
+          <h2>Portafolio actual</h2>
         </div>
 
-      </div>
-
-    </div>
-
-    <!-- PROYECTOS DEL PROGRAMADOR -->
-    <section class="mt-14">
-
-      <h2 class="text-3xl font-bold mb-8">
-        Proyectos de
-        <span class="text-pink-400">
-          {{ programador.nombre }}
-        </span>
-      </h2>
-
-      <div
-        *ngIf="programador.proyectos?.length > 0"
-        class="grid grid-cols-1 md:grid-cols-2 gap-6"
-      >
-
-        <a
-          *ngFor="let proyecto of programador.proyectos"
-          [routerLink]="['/proyectos', proyecto.slug]"
-          class="block bg-slate-900 border border-slate-800 rounded-2xl p-6 hover:border-pink-500 transition"
-        >
-
-          <h3 class="text-2xl font-bold">
-            {{ proyecto.nombre }}
-          </h3>
-
-          <p class="text-slate-400 mt-4">
-            {{ proyecto.descripcionBreve }}
-          </p>
-
-          <div
-            *ngIf="programador.descripcionCompleta"
-            class="mt-6"
+        <div *ngIf="programador.proyectos?.length > 0" class="project-list">
+          <a
+            *ngFor="let proyecto of programador.proyectos"
+            [routerLink]="['/proyectos', proyecto.slug]"
+            class="project-card"
+            appTilt
           >
-            <h2 class="text-xl font-bold mb-3">
-              Sobre el programador
-            </h2>
+            <div class="project-chip">{{ proyecto.tipoProyecto || 'Proyecto' }}</div>
+            <h3>{{ proyecto.nombre }}</h3>
+            <p>{{ proyecto.descripcionBreve }}</p>
+            <div *ngIf="proyecto.tecnologias" class="project-tags">{{ proyecto.tecnologias }}</div>
+          </a>
+        </div>
 
-            <p class="text-slate-300 whitespace-pre-line leading-relaxed">
-              {{ obtenerTextoCompleto(programador.descripcionCompleta) }}
-            </p>
-          </div>
-
-          <div class="flex flex-wrap gap-3 mt-5">
-
-            <span
-              class="bg-pink-500/10 text-pink-400 px-3 py-1 rounded-full text-xs capitalize"
-            >
-              {{ proyecto.tipoProyecto || 'Sin tipo' }}
-            </span>
-
-            <span
-              *ngIf="proyecto.tecnologias"
-              class="bg-slate-800 text-slate-300 px-3 py-1 rounded-full text-xs"
-            >
-              {{ proyecto.tecnologias }}
-            </span>
-
-          </div>
-
-        </a>
-
-      </div>
-
-      <div
-        *ngIf="!programador.proyectos?.length"
-        class="bg-slate-900 border border-slate-800 rounded-2xl p-8 text-center text-slate-400"
-      >
-        Este programador todavía no tiene proyectos asociados.
-      </div>
-
+        <div *ngIf="!programador.proyectos?.length" class="empty-projects">
+          Este programador todavía no tiene proyectos asociados.
+        </div>
+      </aside>
     </section>
-
   </div>
-
 </section>
 
 <app-footer></app-footer>
