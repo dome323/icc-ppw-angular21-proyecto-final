@@ -45,4 +45,20 @@ export class ProjectDetailPageComponent implements OnInit {
 
   }
 
+  obtenerTextoCompleto(bloques: any[]): string {
+
+  if (!Array.isArray(bloques)) {
+    return '';
+  }
+
+  return bloques
+    .map(bloque =>
+      bloque.children
+        ?.map((child: any) => child.text ?? '')
+        .join('')
+    )
+    .filter(Boolean)
+    .join('\n\n');
+}
+
 }
