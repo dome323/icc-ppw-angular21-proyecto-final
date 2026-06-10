@@ -37,8 +37,9 @@ export class HomePageComponent implements OnInit {
   const proyectosResponse: any =
     await this.strapiService.getProyectos();
 
-  this.proyectos =
-    proyectosResponse.data;
+  this.proyectos = proyectosResponse.data.filter(
+    (proyecto: any) => proyecto.destacado === true
+  );
 
   const serviciosResponse: any =
     await this.strapiService.getServicios();

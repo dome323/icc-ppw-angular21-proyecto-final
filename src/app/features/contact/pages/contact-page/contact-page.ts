@@ -16,7 +16,7 @@ import { AuthService } from '../../../../core/services/auth/auth';
 import { SolicitudesService } from '../../../../core/services/solicitudes/solicitudes.service';
 
 @Component({
-  selector: 'app-contacto-page',
+  selector: 'app-contact-page',
   standalone: true,
   imports: [
     CommonModule,

@@ -1,42 +1,110 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import {
+  FormsModule,
+  NgForm
+} from '@angular/forms';
+import {
+  Router,
+  RouterModule
+} from '@angular/router';
+import { CommonModule } from '@angular/common';
+
 import { AuthService } from '../../../../core/services/auth/auth';
 
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [FormsModule, RouterModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule
+  ],
   templateUrl: './register.html',
   styleUrl: './register.css'
 })
 export class RegisterComponent {
-  email: string = '';
-  password: string = '';
-  confirmPassword: string = ''; // Para validar que no se equivoque al escribirla
 
-  constructor(private authService: AuthService, private router: Router) {}
+  email = '';
+  password = '';
+  confirmarPassword = '';
 
-  async onRegister() {
-    console.log('Intentando registrar con:', this.email); // Esto nos ayudará a saber si el botón responde
+  cargando = false;
+  formularioEnviado = false;
+  mensajeError = '';
 
-    if (this.password !== this.confirmPassword) {
-      alert('Las contraseñas no coinciden.');
-      return;
-    }
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
-    if (this.password.length < 6) {
-      alert('La contraseña debe tener al menos 6 caracteres.');
+  get passwordsNoCoinciden(): boolean {
+    return (
+      this.confirmarPassword.length > 0 &&
+      this.password !== this.confirmarPassword
+    );
+  }
+
+  async onRegister(formulario: NgForm) {
+
+    this.formularioEnviado = true;
+    this.mensajeError = '';
+
+    if (
+      formulario.invalid ||
+      this.passwordsNoCoinciden
+    ) {
+      formulario.control.markAllAsTouched();
       return;
     }
 
     try {
-      await this.authService.register(this.email, this.password);
-      alert('¡Cuenta creada con éxito!');
-      this.router.navigate(['/']);
+
+      this.cargando = true;
+
+      await this.authService.register(
+        this.email.trim(),
+        this.password
+      );
+
+      await this.router.navigate(['/']);
+
     } catch (error: any) {
-      console.error('Error de Firebase:', error);
-      alert('Error al registrar: ' + error.message);
+
+      console.error(
+        'Error al registrar usuario:',
+        error
+      );
+
+      this.mensajeError =
+        this.obtenerMensajeError(error.code);
+
+    } finally {
+      this.cargando = false;
+    }
+  }
+
+  limpiarError() {
+    this.mensajeError = '';
+  }
+
+  private obtenerMensajeError(codigo: string): string {
+
+    switch (codigo) {
+
+      case 'auth/email-already-in-use':
+        return 'Ya existe una cuenta con este correo.';
+
+      case 'auth/invalid-email':
+        return 'El correo electrónico no es válido.';
+
+      case 'auth/weak-password':
+        return 'La contraseña es demasiado débil.';
+
+      case 'auth/network-request-failed':
+        return 'Revisa tu conexión a Internet.';
+
+      default:
+        return 'No fue posible crear la cuenta.';
     }
   }
 }

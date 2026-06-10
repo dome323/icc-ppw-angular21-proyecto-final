@@ -29,6 +29,8 @@ async getProgramadorBySlug(slug: string) {
 
   );
 
+
+
 }
 
 async getProyectos() {
@@ -55,4 +57,11 @@ async getProyectoBySlug(slug: string) {
     );
   }
 
+async getProgramadorByCorreo(correo: string) {
+  return await firstValueFrom(
+    this.http.get(
+      `${this.apiUrl}/programadores?filters[correo][$eq]=${encodeURIComponent(correo)}&populate=*`
+    )
+  );
+}
 }
