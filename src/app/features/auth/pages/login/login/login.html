@@ -7,14 +7,11 @@
   >
 
     <h2 class="text-3xl font-black text-center mb-2">
-      ¡Hola de
-      <span class="text-cyan-400">
-        nuevo
-      </span>!
+      {{ 'auth.login.greeting' | transloco }}
     </h2>
 
     <p class="text-slate-400 text-center text-sm mb-8">
-      Ingresa tus credenciales para acceder
+      {{ 'auth.login.description' | transloco }}
     </p>
 
     <form
@@ -32,7 +29,7 @@
           for="email"
           class="block text-sm font-medium text-slate-300 mb-2"
         >
-          Correo electrónico
+          {{ 'auth.login.email' | transloco }}
         </label>
 
         <input
@@ -45,7 +42,7 @@
           required
           email
           autocomplete="email"
-          placeholder="ejemplo@correo.com"
+          placeholder="{{ 'auth.login.form.placeholderEmail' | transloco }}"
           class="w-full bg-slate-950 border rounded-xl px-4 py-3 text-white focus:outline-none transition"
           [ngClass]="
             emailInput.invalid &&
@@ -64,12 +61,11 @@
         >
 
           <p *ngIf="emailInput.errors?.['required']">
-            El correo electrónico es obligatorio.
+            {{ 'auth.errors.requiredEmail' | transloco }}
           </p>
 
           <p *ngIf="emailInput.errors?.['email']">
-            Ingresa un correo válido, por ejemplo:
-            usuario@correo.com
+            {{ 'auth.errors.invalidEmail' | transloco }}
           </p>
 
         </div>
@@ -84,7 +80,7 @@
           for="password"
           class="block text-sm font-medium text-slate-300 mb-2"
         >
-          Contraseña
+          {{ 'auth.login.password' | transloco }}
         </label>
 
         <input
@@ -116,11 +112,11 @@
         >
 
           <p *ngIf="passwordInput.errors?.['required']">
-            La contraseña es obligatoria.
+            {{ 'auth.errors.requiredPassword' | transloco }}
           </p>
 
           <p *ngIf="passwordInput.errors?.['minlength']">
-            La contraseña debe tener al menos 6 caracteres.
+            {{ 'auth.errors.passwordMin' | transloco }}
           </p>
 
         </div>
@@ -142,7 +138,7 @@
         [disabled]="cargando"
         class="w-full bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed font-semibold py-3 rounded-xl shadow-lg transition duration-200 mt-2 active:scale-95"
       >
-        {{ cargando ? 'Ingresando...' : 'Iniciar sesión' }}
+        {{ cargando ? ('auth.login.submitting' | transloco) : ('auth.login.submit' | transloco) }}
       </button>
 
 
@@ -151,7 +147,7 @@
         <div class="h-px bg-slate-700 grow"></div>
 
         <span class="text-xs text-slate-500">
-          O continúa con
+          {{ 'auth.login.continueWith' | transloco }}
         </span>
 
         <div class="h-px bg-slate-700 grow"></div>
@@ -191,7 +187,7 @@
             />
           </svg>
 
-          Continuar con Google
+          {{ 'auth.login.continueWithGoogle' | transloco }}
 
         </button>
 
@@ -200,16 +196,11 @@
     </form>
 
     <p class="mt-6 text-center text-sm text-slate-400">
-      ¿No tienes cuenta?
+      {{ 'auth.login.noAccount' | transloco }}
 
       <a
         routerLink="/register"
         class="text-cyan-400 hover:underline font-medium"
       >
-        Regístrate aquí
+        {{ 'auth.login.register' | transloco }}
       </a>
-    </p>
-
-  </div>
-
-</section>

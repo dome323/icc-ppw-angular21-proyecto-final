@@ -6,6 +6,7 @@ import {
 
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 
 import { HeaderComponent } from '../../../../shared/components/app-header/app-header';
 import { FooterComponent } from '../../../../shared/components/app-footer/app-footer';
@@ -19,24 +20,31 @@ import { SolicitudesService } from '../../../../core/services/solicitudes/solici
   imports: [
     CommonModule,
     RouterModule,
+    TranslocoModule,
     HeaderComponent,
     FooterComponent
   ],
   templateUrl: './mis-solicitudes-page.html',
-  styleUrl: './mis-solicitudes-page.css'
+  styleUrls: ['./mis-solicitudes-page.css']
 })
 export class MisSolicitudesPageComponent implements OnInit {
 
   solicitudes: any[] = [];
+  notifications: string[] = [];
 
   cargando = true;
   mensajeError = '';
+  totalSolicitudes = 0;
+  pendientes = 0;
+  respondidas = 0;
+  rechazadas = 0;
 
   constructor(
     private authService: AuthService,
     private solicitudesService: SolicitudesService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private translocoService: TranslocoService
   ) {}
 
   async ngOnInit() {
@@ -55,6 +63,20 @@ export class MisSolicitudesPageComponent implements OnInit {
         await this.solicitudesService
           .getSolicitudesPorUsuario(usuario.uid);
 
+      this.totalSolicitudes = this.solicitudes.length;
+      this.respondidas = this.solicitudes.filter(solicitud => solicitud.estado === 'respondida').length;
+      this.rechazadas = this.solicitudes.filter(solicitud => solicitud.estado === 'rechazada').length;
+      this.pendientes = this.totalSolicitudes - this.respondidas - this.rechazadas;
+
+      this.notifications = this.solicitudes
+        .filter(solicitud => solicitud.estado === 'respondida')
+        .map(solicitud =>
+          this.translocoService.translate(
+            'misSolicitudes.notifications.responseReady',
+            { developer: solicitud.programadorNombre }
+          )
+        );
+
     } catch (error) {
 
       console.error(
@@ -63,7 +85,7 @@ export class MisSolicitudesPageComponent implements OnInit {
       );
 
       this.mensajeError =
-        'No fue posible cargar tus solicitudes.';
+        this.translocoService.translate('misSolicitudes.messages.errorLoad');
 
     } finally {
 
@@ -76,7 +98,7 @@ export class MisSolicitudesPageComponent implements OnInit {
   formatearFecha(fecha: any): string {
 
     if (!fecha) {
-      return 'Fecha pendiente';
+      return this.translocoService.translate('misSolicitudes.pendingDate');
     }
 
     const fechaJavaScript =
@@ -101,5 +123,17 @@ claseEstado(estado: string): string {
   }
 
   return 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30';
+}
+
+estadoLabel(estado: string): string {
+  if (estado === 'respondida') {
+    return this.translocoService.translate('misSolicitudes.status.responded');
+  }
+
+  if (estado === 'rechazada') {
+    return this.translocoService.translate('misSolicitudes.status.rejected');
+  }
+
+  return this.translocoService.translate('misSolicitudes.status.pending');
 }
 }

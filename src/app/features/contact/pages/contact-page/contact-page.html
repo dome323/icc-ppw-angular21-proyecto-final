@@ -1,145 +1,158 @@
 <app-header></app-header>
 
-<section
-  class="min-h-screen bg-slate-950 text-white px-6 py-20"
->
-  <div class="max-w-3xl mx-auto">
+<section class="contact-shell bg-slate-950 text-white px-6 py-20">
+  <div class="max-w-7xl mx-auto grid gap-10 lg:grid-cols-[1.05fr_0.95fr] items-start">
 
-    <div class="text-center mb-12">
+    <div class="contact-intro">
+      <span class="section-badge">{{ 'contact.badge' | transloco }}</span>
 
-      <p
-        class="inline-block rounded-full border border-cyan-500/20 bg-cyan-500/10 px-4 py-2 text-sm text-cyan-300"
-      >
-        Solicitud de asesoría
+      <h1 class="contact-title">{{ 'contact.heading' | transloco }}</h1>
+
+      <p class="contact-copy">
+        {{ 'contact.copy' | transloco }}
       </p>
 
-      <h1 class="text-4xl md:text-5xl font-black mt-5">
-        Cuéntanos sobre tu
-        <span class="text-cyan-400">proyecto</span>
-      </h1>
+      <div class="contact-cards grid gap-4 sm:grid-cols-2 mt-10">
+        <article class="contact-card">
+          <div class="card-icon">💎</div>
+          <div>
+            <p class="card-title">{{ 'contact.premiumTitle' | transloco }}</p>
+            <p class="card-copy">{{ 'contact.premiumCopy' | transloco }}</p>
+          </div>
+        </article>
 
-      <p class="text-slate-400 mt-5">
-        Selecciona un programador y describe la idea
-        que deseas desarrollar.
-      </p>
-
-    </div>
-
-    <form
-      (ngSubmit)="enviarSolicitud()"
-      class="bg-slate-900 border border-slate-800 rounded-3xl p-8 space-y-6"
-    >
-
-      <div>
-        <label
-          for="nombre"
-          class="block text-sm text-slate-300 mb-2"
-        >
-          Nombre completo
-        </label>
-
-        <input
-          id="nombre"
-          name="nombre"
-          type="text"
-          [(ngModel)]="nombre"
-          required
-          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500"
-          placeholder="Escribe tu nombre"
-        >
+        <article class="contact-card">
+          <div class="card-icon">⚡</div>
+          <div>
+            <p class="card-title">{{ 'contact.trustTitle' | transloco }}</p>
+            <p class="card-copy">{{ 'contact.trustCopy' | transloco }}</p>
+          </div>
+        </article>
       </div>
 
-      <div>
-        <label
-          for="correo"
-          class="block text-sm text-slate-300 mb-2"
-        >
-          Correo electrónico
+      <div class="contact-whatsapp-select mt-8">
+        <label for="whatsappRecipient" class="block text-sm text-slate-300 mb-2">
+          {{ 'contact.whatsappRecipientLabel' | transloco }}
         </label>
-
-        <input
-          id="correo"
-          name="correo"
-          type="email"
-          [(ngModel)]="correo"
-          required
-          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500"
-          placeholder="correo@ejemplo.com"
-        >
-      </div>
-
-      <div>
-        <label
-          for="programador"
-          class="block text-sm text-slate-300 mb-2"
-        >
-          Programador
-        </label>
-
         <select
-          id="programador"
-          name="programador"
-          [(ngModel)]="programadorSlug"
-          required
-          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-cyan-500"
+          id="whatsappRecipient"
+          name="whatsappRecipient"
+          [(ngModel)]="selectedWhatsappRecipient"
+          class="input-field"
         >
-          <option value="">
-            Selecciona un programador
-          </option>
-
           <option
-            *ngFor="let programador of programadores"
-            [value]="programador.slug"
+            *ngFor="let contact of whatsappContacts"
+            [value]="contact.slug"
           >
-            {{ programador.nombre }} —
-            {{ programador.especialidad }}
+            {{ contact.nombre }} — +{{ contact.phone }}
           </option>
         </select>
       </div>
 
-      <div>
-        <label
-          for="descripcion"
-          class="block text-sm text-slate-300 mb-2"
+      <div class="contact-actions mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <a
+          [href]="whatsappLink"
+          target="_blank"
+          rel="noreferrer"
+          class="button button-primary w-full sm:w-auto"
         >
-          Idea o descripción del proyecto
-        </label>
+          {{ 'contact.whatsapp' | transloco }}
+        </a>
 
-        <textarea
-          id="descripcion"
-          name="descripcion"
-          [(ngModel)]="descripcion"
-          required
-          rows="6"
-          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 resize-none focus:outline-none focus:border-cyan-500"
-          placeholder="Describe qué aplicación, página o sistema necesitas..."
-        ></textarea>
+        <a
+          [href]="'mailto:' + contactEmail"
+          class="button button-secondary w-full sm:w-auto"
+        >
+          {{ 'contact.email' | transloco }}
+        </a>
       </div>
 
-      <p
-        *ngIf="mensajeExito"
-        class="bg-green-500/10 border border-green-500/30 text-green-400 rounded-xl px-4 py-3"
-      >
-        {{ mensajeExito }}
-      </p>
+      <div class="contact-notes mt-6 text-sm text-slate-400 space-y-2">
+        <p>{{ 'contact.whatsappNote' | transloco }}</p>
+        <p>{{ 'contact.emailNote' | transloco }}</p>
+      </div>
+    </div>
 
-      <p
-        *ngIf="mensajeError"
-        class="bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl px-4 py-3"
-      >
-        {{ mensajeError }}
-      </p>
+    <div class="contact-form-shell bg-slate-900 border border-slate-800 rounded-3xl p-8 shadow-[0_30px_70px_-40px_rgba(56,189,248,0.55)]">
+      <div class="form-header mb-8">
+        <span class="form-label">{{ 'contact.form.title' | transloco }}</span>
+        <h2 class="form-heading">{{ 'contact.form.subtitle' | transloco }}</h2>
+      </div>
 
-      <button
-        type="submit"
-        [disabled]="enviando"
-        class="w-full bg-cyan-500 hover:bg-cyan-400 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl px-6 py-4 font-semibold transition text-slate-950"
-      >
-        {{ enviando ? 'Enviando...' : 'Enviar solicitud' }}
-      </button>
+      <form (ngSubmit)="enviarSolicitud()" class="space-y-6">
 
-    </form>
+        <div class="form-row">
+          <label for="nombre">{{ 'contact.form.name' | transloco }}</label>
+          <input
+            id="nombre"
+            name="nombre"
+            type="text"
+            [(ngModel)]="nombre"
+            required
+            class="input-field"
+            placeholder="{{ 'contact.form.placeholderName' | transloco }}"
+          />
+        </div>
 
+        <div class="form-row">
+          <label for="correo">{{ 'contact.form.email' | transloco }}</label>
+          <input
+            id="correo"
+            name="correo"
+            type="email"
+            [(ngModel)]="correo"
+            required
+            class="input-field"
+            placeholder="{{ 'contact.form.placeholderEmail' | transloco }}"
+          />
+        </div>
+
+        <div class="form-row">
+          <label for="programador">{{ 'contact.form.programmer' | transloco }}</label>
+          <select
+            id="programador"
+            name="programador"
+            [(ngModel)]="programadorSlug"
+            required
+            class="input-field"
+          >
+            <option value="">{{ 'contact.form.selectProgrammer' | transloco }}</option>
+            <option
+              *ngFor="let programador of programadores"
+              [value]="programador.slug"
+            >
+              {{ programador.nombre }} — {{ programador.especialidad }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label for="descripcion">{{ 'contact.form.description' | transloco }}</label>
+          <textarea
+            id="descripcion"
+            name="descripcion"
+            [(ngModel)]="descripcion"
+            required
+            rows="6"
+            class="input-field textarea-field"
+            placeholder="{{ 'contact.form.placeholderDescription' | transloco }}"
+          ></textarea>
+        </div>
+
+        <div class="space-y-3">
+          <p *ngIf="mensajeExito" class="alert alert-success">{{ mensajeExito }}</p>
+          <p *ngIf="mensajeError" class="alert alert-error">{{ mensajeError }}</p>
+        </div>
+
+        <button
+          type="submit"
+          [disabled]="enviando"
+          class="button button-primary w-full py-4 font-semibold text-slate-950"
+        >
+          {{ enviando ? ('contact.form.sending' | transloco) : ('contact.form.submit' | transloco) }}
+        </button>
+      </form>
+    </div>
   </div>
 </section>
 

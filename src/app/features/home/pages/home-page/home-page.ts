@@ -1,6 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';import { RouterModule } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { FooterComponent } from '../../../../shared/components/app-footer/app-footer';
-import { HeaderComponent } from "../../../../shared/components/app-header/app-header";
+import { HeaderComponent } from '../../../../shared/components/app-header/app-header';
+import { TranslocoModule } from '@ngneat/transloco';
 
 import { CommonModule } from '@angular/common';
 import { StrapiService } from '../../../../core/services/strapi/strapi.service';
@@ -8,10 +10,13 @@ import { StrapiService } from '../../../../core/services/strapi/strapi.service';
 @Component({
   selector: 'app-home-page',
   standalone: true,
-  imports: [ CommonModule,
-             RouterModule,
-             FooterComponent,
-             HeaderComponent], 
+  imports: [
+    CommonModule,
+    RouterModule,
+    TranslocoModule,
+    FooterComponent,
+    HeaderComponent
+  ],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css'
 })

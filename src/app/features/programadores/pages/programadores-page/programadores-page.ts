@@ -2,6 +2,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslocoModule } from '@ngneat/transloco';
 
 import { HeaderComponent } from '../../../../shared/components/app-header/app-header';
 import { FooterComponent } from '../../../../shared/components/app-footer/app-footer';
@@ -15,6 +16,7 @@ import { StrapiService } from '../../../../core/services/strapi/strapi.service';
   imports: [
     CommonModule,
     RouterModule,
+    TranslocoModule,
     HeaderComponent,
     FooterComponent,
     TiltDirective

@@ -5,12 +5,12 @@
   <div class="max-w-7xl mx-auto relative">
 
     <header class="section-header mb-12 text-center">
-      <span class="section-label">Programadores · Equipo Elite</span>
-      <h1 class="section-title">Nuestro Equipo Premium</h1>
+      <span class="section-label">{{ 'programadores.section' | transloco }}</span>
+      <h1 class="section-title">{{ 'programadores.title' | transloco }}</h1>
       <p class="section-copy">
-        Un estilo visual inspirado en interfaces holográficas, alto brillo y experiencia RPG profesional.
+        {{ 'programadores.copy' | transloco }}
       </p>
-      <div class="stat-badge">Total programadores: <strong>{{ programadores.length }}</strong></div>
+      <div class="stat-badge">{{ 'programadores.total' | transloco: { count: programadores.length } }}</div>
     </header>
 
     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">

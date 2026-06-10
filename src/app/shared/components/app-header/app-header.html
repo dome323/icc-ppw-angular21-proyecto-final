@@ -4,38 +4,54 @@
     <!-- LOGO -->
     <a routerLink="/" (click)="cerrarMenu()" class="header-logo">
       <span class="logo-symbol">D</span>
-      <span class="logo-text">DevPortfolio HQ</span>
+      <span class="logo-text">{{ 'header.logo' | transloco }}</span>
     </a>
 
     <!-- MENÚ ESCRITORIO -->
     <nav class="header-nav hidden lg:flex items-center gap-6 xl:gap-8">
-      <a routerLink="/" routerLinkActive="text-cyan-400 active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">Inicio</a>
-      <a routerLink="/programadores" routerLinkActive="text-cyan-400 active-link" class="nav-link">Programadores</a>
-      <a routerLink="/proyectos" routerLinkActive="text-cyan-400 active-link" class="nav-link">Proyectos</a>
-      <a routerLink="/servicios" routerLinkActive="text-cyan-400 active-link" class="nav-link">Servicios</a>
-      <a routerLink="/contact" routerLinkActive="text-cyan-400 active-link" class="nav-link">Contacto</a>
+      <a routerLink="/" routerLinkActive="text-cyan-400 active-link" [routerLinkActiveOptions]="{ exact: true }" class="nav-link">{{ 'header.nav.home' | transloco }}</a>
+      <a routerLink="/programadores" routerLinkActive="text-cyan-400 active-link" class="nav-link">{{ 'header.nav.programadores' | transloco }}</a>
+      <a routerLink="/proyectos" routerLinkActive="text-cyan-400 active-link" class="nav-link">{{ 'header.nav.projects' | transloco }}</a>
+      <a routerLink="/servicios" routerLinkActive="text-cyan-400 active-link" class="nav-link">{{ 'header.nav.services' | transloco }}</a>
+      <a routerLink="/contact" routerLinkActive="text-cyan-400 active-link" class="nav-link">{{ 'header.nav.contact' | transloco }}</a>
     </nav>
 
     <div class="header-actions hidden lg:flex items-center gap-3">
-      <a routerLink="/contact" class="button button-primary">Contactar</a>
+      <a routerLink="/contact" class="button button-primary">{{ 'header.nav.contactButton' | transloco }}</a>
+
+      <div class="language-switcher compact">
+        <button
+          type="button"
+          class="lang-button compact"
+          [class.active]="activeLang === 'es'"
+          (click)="setLanguage('es')"
+        >{{ 'header.language.es' | transloco }}</button>
+        <span class="lang-divider">/</span>
+        <button
+          type="button"
+          class="lang-button compact"
+          [class.active]="activeLang === 'en'"
+          (click)="setLanguage('en')"
+        >{{ 'header.language.en' | transloco }}</button>
+      </div>
 
       @if (usuarioLogueado) {
 
         @if (!esProgramador) {
-          <a routerLink="/mis-solicitudes" routerLinkActive="text-cyan-400 active-link" class="nav-link">Mis solicitudes</a>
+          <a routerLink="/mis-solicitudes" routerLinkActive="text-cyan-400 active-link" class="nav-link">{{ 'header.nav.myRequests' | transloco }}</a>
         }
 
         @if (esProgramador) {
-          <a routerLink="/solicitudes-recibidas" routerLinkActive="text-cyan-400 active-link" class="nav-link">Solicitudes recibidas</a>
+          <a routerLink="/solicitudes-recibidas" routerLinkActive="text-cyan-400 active-link" class="nav-link">{{ 'header.nav.receivedRequests' | transloco }}</a>
         }
 
         <span class="user-chip">{{ usuarioLogueado.email }}</span>
 
-        <button type="button" (click)="onLogout()" class="button button-ghost">Cerrar sesión</button>
+        <button type="button" (click)="onLogout()" class="button button-ghost">{{ 'header.nav.logout' | transloco }}</button>
 
       } @else {
 
-        <a routerLink="/login" class="button button-secondary">Ingresar</a>
+        <a routerLink="/login" class="button button-secondary">{{ 'header.nav.login' | transloco }}</a>
 
       }
     </div>
@@ -58,25 +74,31 @@
   @if (menuAbierto) {
     <div class="mobile-menu lg:hidden">
       <nav class="mobile-nav flex flex-col gap-3">
-        <a routerLink="/" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" [routerLinkActiveOptions]="{ exact: true }" class="mobile-link">Inicio</a>
-        <a routerLink="/programadores" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Programadores</a>
-        <a routerLink="/proyectos" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Proyectos</a>
-        <a routerLink="/servicios" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Servicios</a>
-        <a routerLink="/contact" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Contacto</a>
+        <a routerLink="/" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" [routerLinkActiveOptions]="{ exact: true }" class="mobile-link">{{ 'header.nav.home' | transloco }}</a>
+        <a routerLink="/programadores" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">{{ 'header.nav.programadores' | transloco }}</a>
+        <a routerLink="/proyectos" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">{{ 'header.nav.projects' | transloco }}</a>
+        <a routerLink="/servicios" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">{{ 'header.nav.services' | transloco }}</a>
+        <a routerLink="/contact" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">{{ 'header.nav.contact' | transloco }}</a>
       </nav>
 
+      <div class="mobile-language-toggle mt-4 flex gap-2 justify-center">
+        <button type="button" class="lang-button compact" [class.active]="activeLang === 'es'" (click)="setLanguage('es')">{{ 'header.language.es' | transloco }}</button>
+        <span class="lang-divider">/</span>
+        <button type="button" class="lang-button compact" [class.active]="activeLang === 'en'" (click)="setLanguage('en')">{{ 'header.language.en' | transloco }}</button>
+      </div>
+
       <div class="mobile-compact-actions mt-4 flex flex-col gap-3">
-        <a routerLink="/contact" (click)="cerrarMenu()" class="button button-primary w-full text-center">Contactar equipo</a>
+        <a routerLink="/contact" (click)="cerrarMenu()" class="button button-primary w-full text-center">{{ 'header.nav.contactButton' | transloco }}</a>
         @if (usuarioLogueado) {
           @if (!esProgramador) {
-            <a routerLink="/mis-solicitudes" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Mis solicitudes</a>
+            <a routerLink="/mis-solicitudes" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">{{ 'header.nav.myRequests' | transloco }}</a>
           }
           @if (esProgramador) {
-            <a routerLink="/solicitudes-recibidas" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">Solicitudes recibidas</a>
+            <a routerLink="/solicitudes-recibidas" (click)="cerrarMenu()" routerLinkActive="text-cyan-400 active-link" class="mobile-link">{{ 'header.nav.receivedRequests' | transloco }}</a>
           }
-          <button type="button" (click)="onLogout()" class="button button-ghost w-full">Cerrar sesión</button>
+          <button type="button" (click)="onLogout()" class="button button-ghost w-full">{{ 'header.nav.logout' | transloco }}</button>
         } @else {
-          <a routerLink="/login" (click)="cerrarMenu()" class="button button-secondary w-full text-center">Ingresar</a>
+          <a routerLink="/login" (click)="cerrarMenu()" class="button button-secondary w-full text-center">{{ 'header.nav.login' | transloco }}</a>
         }
       </div>
     </div>

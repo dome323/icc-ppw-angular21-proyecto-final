@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { User } from 'firebase/auth';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 
 import { AuthService } from '../../../core/services/auth/auth';
 import { StrapiService } from '../../../core/services/strapi/strapi.service';
@@ -11,7 +12,8 @@ import { StrapiService } from '../../../core/services/strapi/strapi.service';
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    TranslocoModule
   ],
   templateUrl: './app-header.html',
   styleUrl: './app-header.css'
@@ -22,14 +24,17 @@ export class HeaderComponent implements OnInit {
 
   esProgramador = false;
   menuAbierto = false;
+  activeLang = 'es';
 
   constructor(
     private authService: AuthService,
     private strapiService: StrapiService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) {}
 
   ngOnInit() {
+    this.activeLang = this.translocoService.getActiveLang();
 
     this.authService.currentUser$.subscribe(
       async usuario => {
@@ -89,5 +94,11 @@ export class HeaderComponent implements OnInit {
         error
       );
     }
+  }
+
+  setLanguage(lang: 'es' | 'en') {
+    this.activeLang = lang;
+    this.translocoService.setActiveLang(lang);
+    localStorage.setItem('lang', lang);
   }
 }

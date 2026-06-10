@@ -5,14 +5,14 @@
 
   <div class="max-w-7xl mx-auto relative">
     <header class="projects-hero text-center mb-12">
-      <span class="projects-label">Proyectos · Portafolio Premium</span>
-      <h2 class="projects-title">Nuestros <span>Proyectos</span></h2>
+      <span class="projects-label">{{ 'projects.section' | transloco }}</span>
+      <h2 class="projects-title">{{ 'projects.title' | transloco }}</h2>
       <p class="projects-copy">
-        Interfaz holográfica con tarjetas premium, filtros tipo pills y microinteracciones suaves.
+        {{ 'projects.copy' | transloco }}
       </p>
       <div class="projects-meta">
-        <span class="meta-pill active">Mostrando {{ filteredProyectos.length }} de {{ totalProyectos }}</span>
-        <span class="meta-pill">Todos los proyectos</span>
+        <span class="meta-pill active">{{ 'projects.meta.showing' | transloco: { current: filteredProyectos.length, total: totalProyectos } }}</span>
+        <span class="meta-pill">{{ 'projects.meta.all' | transloco }}</span>
       </div>
     </header>
 
@@ -24,7 +24,7 @@
         [class.active]="selectedFilter === filtro"
         (click)="applyFilter(filtro)"
       >
-        {{ filtro }}
+        {{ filtro === 'Todos' ? ('projects.filter.all' | transloco) : filtro }}
       </button>
     </div>
 
@@ -43,7 +43,7 @@
             [alt]="proyecto.nombre"
             class="project-image"
           />
-          <span *ngIf="proyecto.destacado" class="badge-featured">Featured</span>
+          <span *ngIf="proyecto.destacado" class="badge-featured">{{ 'projects.featured' | transloco }}</span>
         </div>
 
         <div class="project-card-body">
@@ -59,8 +59,8 @@
           </div>
 
           <div class="project-cta">
-            <span class="cta-pill">Ver proyecto</span>
-            <span class="cta-mini">Detalles</span>
+            <span class="cta-pill">{{ 'projects.cta' | transloco }}</span>
+            <span class="cta-mini">{{ 'projects.details' | transloco }}</span>
           </div>
         </div>
       </a>

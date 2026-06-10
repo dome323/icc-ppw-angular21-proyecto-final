@@ -7,7 +7,7 @@ import {
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 import { HeaderComponent } from '../../../../shared/components/app-header/app-header';
 import { FooterComponent } from '../../../../shared/components/app-footer/app-footer';
 
@@ -22,6 +22,7 @@ import { SolicitudesService } from '../../../../core/services/solicitudes/solici
     CommonModule,
     FormsModule,
     RouterModule,
+    TranslocoModule,
     HeaderComponent,
     FooterComponent
   ],
@@ -41,13 +42,32 @@ export class ContactPageComponent implements OnInit {
   mensajeExito = '';
   mensajeError = '';
 
+  contactEmail = 'contacto@devportfolio.ec';
+
+  whatsappContacts = [
+    { slug: 'domenica', nombre: 'Domenica Uyunkar', phone: '593985464222' },
+    { slug: 'josue', nombre: 'Josue Valdez', phone: '5930963356625' }
+  ];
+
+  selectedWhatsappRecipient = 'domenica';
+
   constructor(
     private strapiService: StrapiService,
     private solicitudesService: SolicitudesService,
     private authService: AuthService,
     private router: Router,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private translocoService: TranslocoService
   ) {}
+
+  get selectedWhatsappContact() {
+    return this.whatsappContacts.find(contact => contact.slug === this.selectedWhatsappRecipient) ?? this.whatsappContacts[0];
+  }
+
+  get whatsappLink(): string {
+    const message = this.translocoService.translate('contact.whatsappMessage');
+    return `https://wa.me/${this.selectedWhatsappContact.phone}?text=${encodeURIComponent(message)}`;
+  }
 
   async ngOnInit() {
     try {
@@ -68,8 +88,7 @@ export class ContactPageComponent implements OnInit {
     } catch (error) {
       console.error('Error al cargar contacto:', error);
 
-      this.mensajeError =
-        'No fue posible cargar los programadores.';
+      this.mensajeError = this.translocoService.translate('contact.messages.errorLoad');
 
       this.cd.detectChanges();
     }
@@ -86,8 +105,7 @@ export class ContactPageComponent implements OnInit {
       !this.descripcion.trim() ||
       !this.programadorSlug
     ) {
-      this.mensajeError =
-        'Completa todos los campos del formulario.';
+      this.mensajeError = this.translocoService.translate('contact.messages.errorFill');
       return;
     }
 
@@ -95,6 +113,7 @@ export class ContactPageComponent implements OnInit {
       await this.authService.getCurrentUser();
 
     if (!usuario) {
+      this.mensajeError = this.translocoService.translate('contact.messages.loginRequired');
       await this.router.navigate(['/login']);
       return;
     }
@@ -106,8 +125,7 @@ export class ContactPageComponent implements OnInit {
       );
 
     if (!programadorSeleccionado) {
-      this.mensajeError =
-        'Selecciona un programador válido.';
+      this.mensajeError = this.translocoService.translate('contact.messages.errorSelect');
       return;
     }
 
@@ -125,8 +143,7 @@ export class ContactPageComponent implements OnInit {
         uidUsuario: usuario.uid
       });
 
-      this.mensajeExito =
-        'Solicitud enviada correctamente.';
+      this.mensajeExito = this.translocoService.translate('contact.messages.success');
 
       this.nombre = '';
       this.descripcion = '';
@@ -135,8 +152,7 @@ export class ContactPageComponent implements OnInit {
     } catch (error) {
       console.error('Error al enviar solicitud:', error);
 
-      this.mensajeError =
-        'No fue posible enviar la solicitud.';
+      this.mensajeError = this.translocoService.translate('contact.messages.errorSend');
 
     } finally {
       this.enviando = false;

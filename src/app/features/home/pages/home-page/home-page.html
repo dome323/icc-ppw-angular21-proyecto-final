@@ -8,35 +8,34 @@
       <div class="home-hero__lines"></div>
 
       <div class="home-hero__content">
-        <p class="hero-eyebrow reveal reveal-delay-1">Agencia tecnológica · Ecuador</p>
+        <p class="hero-eyebrow reveal reveal-delay-1">{{ 'home.hero.eyebrow' | transloco }}</p>
 
         <h1 class="hero-title reveal reveal-delay-2">
-          Construimos software
-          <span class="hero-gradient">que las empresas confían.</span>
+          {{ 'home.hero.title' | transloco }}
+          <span class="hero-gradient">{{ 'home.hero.titleAccent' | transloco }}</span>
         </h1>
 
         <p class="hero-copy reveal reveal-delay-3">
-          Agencia boutique enfocada en soluciones digitales corporativas con experiencia en
-          desarrollos Angular, portales empresariales y productos de alto impacto.
+          {{ 'home.hero.copy' | transloco }}
         </p>
 
         <div class="hero-actions reveal reveal-delay-4">
-          <a routerLink="/proyectos" class="button button-holo">Ver proyectos</a>
-          <a routerLink="/contact" class="button button-glass">Contactarnos</a>
+          <a routerLink="/proyectos" class="button button-holo">{{ 'home.hero.projectsButton' | transloco }}</a>
+          <a routerLink="/contact" class="button button-glass">{{ 'home.hero.contactButton' | transloco }}</a>
         </div>
 
         <div class="stats-grid reveal reveal-delay-5">
           <article class="stat-card">
             <span class="stat-value">{{ programadores.length }}</span>
-            <span class="stat-label">Expertos en plantilla</span>
+            <span class="stat-label">{{ 'home.stats.experts' | transloco }}</span>
           </article>
           <article class="stat-card">
             <span class="stat-value">{{ proyectos.length }}</span>
-            <span class="stat-label">Proyectos destacados</span>
+            <span class="stat-label">{{ 'home.stats.featuredProjects' | transloco }}</span>
           </article>
           <article class="stat-card">
             <span class="stat-value">{{ servicios.length }}</span>
-            <span class="stat-label">Servicios listos</span>
+            <span class="stat-label">{{ 'home.stats.readyServices' | transloco }}</span>
           </article>
         </div>
       </div>
@@ -45,8 +44,8 @@
     <section class="home-section">
       <div class="section-header">
         <div>
-          <span class="section-eyebrow">Equipo</span>
-          <h2>Una experiencia de producto premium con enfoque técnico.</h2>
+          <span class="section-eyebrow">{{ 'home.team.section' | transloco }}</span>
+          <h2>{{ 'home.team.heading' | transloco }}</h2>
         </div>
       </div>
 
@@ -71,10 +70,10 @@
 
         <aside class="hover-panel" [class.active]="hoveredProgramador">
           <div class="hover-panel__card">
-            <p class="hover-panel__eyebrow">Equipo RPG</p>
-            <h3>{{ hoveredProgramador?.nombre || 'Build de equipo' }}</h3>
+            <p class="hover-panel__eyebrow">{{ 'home.team.panelLabel' | transloco }}</p>
+            <h3>{{ hoveredProgramador?.nombre || ('home.team.panelDefaultTitle' | transloco) }}</h3>
             <p class="hover-panel__subtitle">
-              {{ hoveredProgramador?.role || 'Pasa el cursor sobre un perfil para revelar estadísticas premium.' }}
+              {{ hoveredProgramador?.role || ('home.team.panelHint' | transloco) }}
             </p>
 
             <ng-container *ngIf="hoveredProgramador; else hoverHint">
@@ -98,7 +97,7 @@
             </ng-container>
 
             <ng-template #hoverHint>
-              <p class="hover-panel__hint">Desplaza el cursor sobre una tarjeta para activar el panel flotante de estadísticas.</p>
+              <p class="hover-panel__hint">{{ 'home.team.panelHint' | transloco }}</p>
             </ng-template>
           </div>
         </aside>
@@ -108,8 +107,8 @@
     <section class="home-section home-section--dark">
       <div class="section-header">
         <div>
-          <span class="section-eyebrow">Proyectos</span>
-          <h2>Casos visibles con impacto real en producto y diseño.</h2>
+          <span class="section-eyebrow">{{ 'home.projects.section' | transloco }}</span>
+          <h2>{{ 'home.projects.heading' | transloco }}</h2>
         </div>
       </div>
 
@@ -128,8 +127,8 @@
     <section class="home-section">
       <div class="section-header">
         <div>
-          <span class="section-eyebrow">Servicios</span>
-          <h2>Soluciones pensadas para equipos que buscan escalar con seguridad.</h2>
+          <span class="section-eyebrow">{{ 'home.services.section' | transloco }}</span>
+          <h2>{{ 'home.services.heading' | transloco }}</h2>
         </div>
       </div>
 

@@ -8,6 +8,7 @@ import {
   RouterModule
 } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { TranslocoModule, TranslocoService } from '@ngneat/transloco';
 
 import { AuthService } from '../../../../../core/services/auth/auth';
 
@@ -17,7 +18,8 @@ import { AuthService } from '../../../../../core/services/auth/auth';
   imports: [
     CommonModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    TranslocoModule
   ],
   templateUrl: './login.html',
   styleUrl: './login.css'
@@ -33,7 +35,8 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private translocoService: TranslocoService
   ) {}
 
   async onLogin(formulario: NgForm) {
@@ -92,11 +95,9 @@ export class LoginComponent {
       );
 
       if (error.code === 'auth/popup-closed-by-user') {
-        this.mensajeError =
-          'Cerraste la ventana de Google.';
+        this.mensajeError = this.translocoService.translate('auth.login.errorPopupClosed');
       } else {
-        this.mensajeError =
-          'No fue posible iniciar sesión con Google.';
+        this.mensajeError = this.translocoService.translate('auth.login.loginGoogleDefault');
       }
 
     } finally {
@@ -113,25 +114,25 @@ export class LoginComponent {
     switch (codigo) {
 
       case 'auth/invalid-email':
-        return 'El correo electrónico no es válido.';
+        return this.translocoService.translate('auth.errors.invalidEmail');
 
       case 'auth/invalid-credential':
-        return 'El correo o la contraseña son incorrectos.';
+        return this.translocoService.translate('auth.errors.invalidCredential');
 
       case 'auth/user-not-found':
-        return 'No existe una cuenta con este correo.';
+        return this.translocoService.translate('auth.errors.userNotFound');
 
       case 'auth/wrong-password':
-        return 'La contraseña es incorrecta.';
+        return this.translocoService.translate('auth.errors.wrongPassword');
 
       case 'auth/too-many-requests':
-        return 'Demasiados intentos. Intenta nuevamente más tarde.';
+        return this.translocoService.translate('auth.errors.tooManyRequests');
 
       case 'auth/network-request-failed':
-        return 'Revisa tu conexión a Internet.';
+        return this.translocoService.translate('auth.errors.networkFailed');
 
       default:
-        return 'No fue posible iniciar sesión.';
+        return this.translocoService.translate('auth.errors.loginDefault');
     }
   }
 }
