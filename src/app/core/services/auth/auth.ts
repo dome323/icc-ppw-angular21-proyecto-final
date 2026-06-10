@@ -30,10 +30,14 @@ export class AuthService {
 
   // Lógica para cerrar sesión
   logout() {
-    return signOut(this.auth);
-  }
+  return signOut(this.auth);
+}
 
-  get currentUser$(): Observable<User | null> {
-    return this.user$.asObservable();
-  }
+get currentUser$(): Observable<User | null> {
+  return this.user$.asObservable();
+}
+
+getCurrentUser() {
+  return this.auth.currentUser;
+}
 }

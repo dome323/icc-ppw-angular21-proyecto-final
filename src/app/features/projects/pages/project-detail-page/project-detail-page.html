@@ -1,0 +1,63 @@
+<app-header></app-header>
+
+<section class="min-h-screen bg-slate-950 text-white py-20 px-8">
+
+  <div
+    *ngIf="proyecto"
+    class="max-w-5xl mx-auto"
+  >
+
+    <div class="bg-slate-900 rounded-3xl p-10">
+
+      <h1 class="text-5xl font-bold">
+        {{ proyecto.nombre }}
+      </h1>
+
+
+        <img
+        [src]="'http://localhost:1337' + proyecto.imagen[0].url"
+        [alt]="proyecto.nombre"
+        class="w-full rounded-2xl my-8"
+        />
+
+      <p class="text-pink-400 text-xl mt-4">
+        {{ proyecto.descripcionBreve }}
+      </p>
+
+      <div class="mt-8">
+
+        <span
+          class="bg-pink-500/20 text-pink-400 px-4 py-2 rounded-full"
+        >
+          {{ proyecto.tecnologias }}
+        </span>
+
+      </div>
+
+      <div class="flex gap-4 mt-8">
+
+        <a
+          [href]="proyecto.repositorio"
+          target="_blank"
+          class="bg-slate-700 px-4 py-2 rounded-xl"
+        >
+          Repositorio
+        </a>
+
+        <a
+          [href]="proyecto.demo"
+          target="_blank"
+          class="bg-green-600 px-4 py-2 rounded-xl"
+        >
+          Demo
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>

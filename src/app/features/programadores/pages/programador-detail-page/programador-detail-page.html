@@ -1,0 +1,68 @@
+<app-header></app-header>
+
+<section class="min-h-screen bg-slate-950 text-white py-20 px-8">
+
+  <div
+    *ngIf="programador"
+    class="max-w-5xl mx-auto"
+  >
+
+    <div class="bg-slate-900 rounded-3xl p-10">
+
+      <div class="flex flex-col md:flex-row gap-10 items-center">
+
+        <img
+          [src]="'http://localhost:1337' + programador.foto.url"
+          [alt]="programador.nombre"
+          class="w-64 h-64 rounded-full object-cover border-4 border-pink-500"
+        >
+
+        <div>
+
+          <h1 class="text-5xl font-bold">
+            {{ programador.nombre }}
+          </h1>
+
+          <p class="text-pink-400 text-xl mt-3">
+            {{ programador.especialidad }}
+          </p>
+
+          <p class="mt-6 text-slate-300">
+            {{ programador.descripcionBreve }}
+          </p>
+
+          <p class="mt-6 text-slate-400">
+            {{ programador.correo }}
+          </p>
+
+          <div class="flex gap-4 mt-6">
+
+            <a
+              [href]="programador.github"
+              target="_blank"
+              class="bg-slate-700 px-4 py-2 rounded-xl"
+            >
+              GitHub
+            </a>
+
+            <a
+              [href]="programador.linkedin"
+              target="_blank"
+              class="bg-blue-600 px-4 py-2 rounded-xl"
+            >
+              LinkedIn
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>

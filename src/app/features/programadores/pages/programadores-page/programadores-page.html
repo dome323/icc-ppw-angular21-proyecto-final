@@ -1,0 +1,53 @@
+<app-header></app-header>
+
+<section class="min-h-screen bg-slate-950 text-white py-20 px-8">
+
+  <div class="max-w-7xl mx-auto">
+
+    <h1 class="text-5xl font-bold text-center mb-12">
+      Nuestro Equipo
+    </h1>
+
+    <p class="text-center text-green-400 mb-10">
+  Total programadores: {{ programadores.length }}
+</p>
+
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <a
+        *ngFor="let programador of programadores"
+        [routerLink]="['/programadores', programador.slug]"
+        class="bg-slate-900 rounded-3xl p-8 border border-slate-800 block hover:border-pink-500 transition"
+        >
+        <div class="flex flex-col items-center text-center">
+
+          <img
+            [src]="'http://localhost:1337' + programador.foto.url"
+            [alt]="programador.nombre"
+            class="w-40 h-40 object-cover rounded-full border-4 border-pink-500 mb-6"
+          >
+
+          <h2 class="text-3xl font-bold">
+            {{ programador.nombre }}
+          </h2>
+
+          <p class="text-pink-400 mt-2">
+            {{ programador.especialidad }}
+          </p>
+
+          <p class="text-slate-400 mt-4">
+            {{ programador.descripcionBreve }}
+          </p>
+
+        </div>
+
+    </a>
+
+    </div>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>

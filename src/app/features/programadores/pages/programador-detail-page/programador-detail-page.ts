@@ -1,0 +1,48 @@
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+
+
+import { StrapiService } from '../../../../core/services/strapi/strapi.service';
+import { HeaderComponent } from '../../../../shared/components/app-header/app-header';
+import { FooterComponent } from '../../../../shared/components/app-footer/app-footer';
+
+@Component({
+  selector: 'app-programador-detail-page',
+  standalone: true,
+  imports: [
+    CommonModule,
+    RouterModule,
+    HeaderComponent,
+    FooterComponent
+  ],
+  templateUrl: './programador-detail-page.html',
+  styleUrl: './programador-detail-page.css'
+})
+export class ProgramadorDetailPageComponent implements OnInit {
+
+  programador: any = null;
+
+  constructor(
+    private route: ActivatedRoute,
+    private strapiService: StrapiService,
+    private cd: ChangeDetectorRef
+  ) {}
+
+  async ngOnInit() {
+
+    const slug =
+      this.route.snapshot.paramMap.get('slug');
+
+    const response: any =
+      await this.strapiService.getProgramadorBySlug(slug!);
+
+    this.programador = response.data[0];
+
+    console.log(this.programador);
+
+    this.cd.detectChanges();
+
+  }
+
+}

@@ -1,0 +1,38 @@
+<app-header></app-header>
+
+<section class="min-h-screen bg-slate-950 text-white py-20 px-8">
+
+  <div class="max-w-7xl mx-auto">
+
+    <h1 class="text-5xl font-bold text-center mb-4">
+      Nuestros Servicios
+    </h1>
+
+    <p class="text-center text-green-400 mb-10">
+      Total servicios: {{ servicios.length }}
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <div
+        *ngFor="let servicio of servicios"
+        class="bg-slate-900 border border-slate-800 rounded-2xl p-6"
+        >
+
+        <h2 class="text-2xl font-bold mb-4">
+          {{ servicio.nombre }}
+        </h2>
+
+        <p class="text-slate-400">
+          {{ servicio.descripcion }}
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>
