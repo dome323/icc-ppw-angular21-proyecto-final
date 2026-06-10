@@ -1,1 +1,146 @@
-<p>contact-page works!</p>
+<app-header></app-header>
+
+<section
+  class="min-h-screen bg-slate-950 text-white px-6 py-20"
+>
+  <div class="max-w-3xl mx-auto">
+
+    <div class="text-center mb-12">
+
+      <p
+        class="inline-block rounded-full border border-pink-400/30 bg-pink-400/10 px-4 py-2 text-sm text-pink-300"
+      >
+        Solicitud de asesoría
+      </p>
+
+      <h1 class="text-4xl md:text-5xl font-black mt-5">
+        Cuéntanos sobre tu
+        <span class="text-pink-400">proyecto</span>
+      </h1>
+
+      <p class="text-slate-400 mt-5">
+        Selecciona un programador y describe la idea
+        que deseas desarrollar.
+      </p>
+
+    </div>
+
+    <form
+      (ngSubmit)="enviarSolicitud()"
+      class="bg-slate-900 border border-slate-800 rounded-3xl p-8 space-y-6"
+    >
+
+      <div>
+        <label
+          for="nombre"
+          class="block text-sm text-slate-300 mb-2"
+        >
+          Nombre completo
+        </label>
+
+        <input
+          id="nombre"
+          name="nombre"
+          type="text"
+          [(ngModel)]="nombre"
+          required
+          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-pink-500"
+          placeholder="Escribe tu nombre"
+        >
+      </div>
+
+      <div>
+        <label
+          for="correo"
+          class="block text-sm text-slate-300 mb-2"
+        >
+          Correo electrónico
+        </label>
+
+        <input
+          id="correo"
+          name="correo"
+          type="email"
+          [(ngModel)]="correo"
+          required
+          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-pink-500"
+          placeholder="correo@ejemplo.com"
+        >
+      </div>
+
+      <div>
+        <label
+          for="programador"
+          class="block text-sm text-slate-300 mb-2"
+        >
+          Programador
+        </label>
+
+        <select
+          id="programador"
+          name="programador"
+          [(ngModel)]="programadorSlug"
+          required
+          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 focus:outline-none focus:border-pink-500"
+        >
+          <option value="">
+            Selecciona un programador
+          </option>
+
+          <option
+            *ngFor="let programador of programadores"
+            [value]="programador.slug"
+          >
+            {{ programador.nombre }} —
+            {{ programador.especialidad }}
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label
+          for="descripcion"
+          class="block text-sm text-slate-300 mb-2"
+        >
+          Idea o descripción del proyecto
+        </label>
+
+        <textarea
+          id="descripcion"
+          name="descripcion"
+          [(ngModel)]="descripcion"
+          required
+          rows="6"
+          class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 resize-none focus:outline-none focus:border-pink-500"
+          placeholder="Describe qué aplicación, página o sistema necesitas..."
+        ></textarea>
+      </div>
+
+      <p
+        *ngIf="mensajeExito"
+        class="bg-green-500/10 border border-green-500/30 text-green-400 rounded-xl px-4 py-3"
+      >
+        {{ mensajeExito }}
+      </p>
+
+      <p
+        *ngIf="mensajeError"
+        class="bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl px-4 py-3"
+      >
+        {{ mensajeError }}
+      </p>
+
+      <button
+        type="submit"
+        [disabled]="enviando"
+        class="w-full bg-pink-500 hover:bg-pink-400 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl px-6 py-4 font-semibold transition"
+      >
+        {{ enviando ? 'Enviando...' : 'Enviar solicitud' }}
+      </button>
+
+    </form>
+
+  </div>
+</section>
+
+<app-footer></app-footer>

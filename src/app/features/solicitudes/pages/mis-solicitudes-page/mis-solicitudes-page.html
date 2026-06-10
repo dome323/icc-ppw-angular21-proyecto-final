@@ -1,0 +1,160 @@
+<app-header></app-header>
+
+<section class="min-h-screen bg-slate-950 text-white px-6 py-20">
+
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-12">
+
+      <p
+        class="inline-block rounded-full border border-pink-400/30 bg-pink-400/10 px-4 py-2 text-sm text-pink-300"
+      >
+        Panel del usuario
+      </p>
+
+      <h1 class="text-4xl md:text-5xl font-black mt-5">
+        Mis
+        <span class="text-pink-400">
+          solicitudes
+        </span>
+      </h1>
+
+      <p class="text-slate-400 mt-4">
+        Consulta los proyectos que has solicitado
+        y revisa su estado.
+      </p>
+
+    </div>
+
+
+    <!-- CARGANDO -->
+    <div
+      *ngIf="cargando"
+      class="text-center text-slate-400 py-16"
+    >
+      Cargando solicitudes...
+    </div>
+
+
+    <!-- ERROR -->
+    <div
+      *ngIf="!cargando && mensajeError"
+      class="max-w-2xl mx-auto bg-red-500/10 border border-red-500/30 text-red-400 rounded-2xl p-5 text-center"
+    >
+      {{ mensajeError }}
+    </div>
+
+
+    <!-- SIN SOLICITUDES -->
+    <div
+      *ngIf="
+        !cargando &&
+        !mensajeError &&
+        solicitudes.length === 0
+      "
+      class="max-w-2xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-10 text-center"
+    >
+
+      <h2 class="text-2xl font-bold">
+        Todavía no tienes solicitudes
+      </h2>
+
+      <p class="text-slate-400 mt-4">
+        Envía una solicitud para comenzar
+        un nuevo proyecto.
+      </p>
+
+      <a
+        routerLink="/contacto"
+        class="inline-block mt-7 bg-pink-500 hover:bg-pink-400 px-6 py-3 rounded-xl font-semibold transition"
+      >
+        Crear solicitud
+      </a>
+
+    </div>
+
+
+    <!-- LISTADO -->
+    <div
+      *ngIf="
+        !cargando &&
+        !mensajeError &&
+        solicitudes.length > 0
+      "
+      class="grid grid-cols-1 md:grid-cols-2 gap-7"
+    >
+
+      <article
+        *ngFor="let solicitud of solicitudes"
+        class="bg-slate-900 border border-slate-800 rounded-3xl p-7 hover:border-pink-500/50 transition"
+      >
+
+        <div class="flex items-start justify-between gap-4">
+
+          <div>
+
+            <p class="text-sm text-slate-500">
+              Programador seleccionado
+            </p>
+
+            <h2 class="text-2xl font-bold mt-1">
+              {{ solicitud.programadorNombre }}
+            </h2>
+
+          </div>
+
+          <span
+            class="border px-3 py-1 rounded-full text-xs font-semibold capitalize"
+            [ngClass]="claseEstado(solicitud.estado)"
+          >
+            {{ solicitud.estado }}
+          </span>
+
+        </div>
+
+        <div class="mt-6">
+
+          <p class="text-sm text-slate-500">
+            Solicitante
+          </p>
+
+          <p class="text-slate-200 mt-1">
+            {{ solicitud.nombre }}
+          </p>
+
+          <p class="text-slate-400 text-sm">
+            {{ solicitud.correo }}
+          </p>
+
+        </div>
+
+        <div class="mt-6">
+
+          <p class="text-sm text-slate-500">
+            Descripción del proyecto
+          </p>
+
+          <p class="text-slate-300 mt-2 leading-relaxed">
+            {{ solicitud.descripcion }}
+          </p>
+
+        </div>
+
+        <div class="mt-6 pt-5 border-t border-slate-800">
+
+          <p class="text-xs text-slate-500">
+            Enviada el
+            {{ formatearFecha(solicitud.fecha) }}
+          </p>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>
