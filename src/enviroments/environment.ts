@@ -1,5 +1,6 @@
 export const environment = {
   production: false,
+  strapiUrl: 'http://localhost:1337/api',
   firebaseConfig: {
     apiKey: "AIzaSyAaYRdJCjbHcGCyGiD-8hd3GbzCa_39nDQ", 
     authDomain: "proyect-41f95.firebaseapp.com",
