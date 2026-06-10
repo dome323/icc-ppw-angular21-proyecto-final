@@ -1,4 +1,4 @@
-import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { ApplicationConfig, provideBrowserGlobalErrorListeners,isDevMode } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient } from '@angular/common/http';
 import { provideTransloco, translocoConfig } from '@ngneat/transloco';
@@ -17,7 +17,7 @@ export const appConfig: ApplicationConfig = {
         defaultLang: localStorage.getItem('lang') || 'es',
         fallbackLang: 'es',
         reRenderOnLangChange: true,
-        prodMode: false,
+        prodMode: isDevMode() === false,
         missingHandler: {
           logMissingKey: false,
           useFallbackTranslation: true,
