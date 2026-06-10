@@ -105,6 +105,19 @@
             {{ proyecto.descripcionBreve }}
           </p>
 
+          <div
+            *ngIf="programador.descripcionCompleta"
+            class="mt-6"
+          >
+            <h2 class="text-xl font-bold mb-3">
+              Sobre el programador
+            </h2>
+
+            <p class="text-slate-300 whitespace-pre-line leading-relaxed">
+              {{ obtenerTextoCompleto(programador.descripcionCompleta) }}
+            </p>
+          </div>
+
           <div class="flex flex-wrap gap-3 mt-5">
 
             <span
