@@ -1,54 +1,227 @@
-<section class="min-h-screen bg-slate-950 text-white flex flex-col justify-center items-center px-4">
-  <div class="bg-slate-900 border border-slate-800 p-8 rounded-2xl w-full max-w-md shadow-2xl">
-    
-    <h2 class="text-3xl font-black text-center mb-2">Crea tu <span class="text-pink-400">cuenta</span></h2>
-    <p class="text-slate-400 text-center text-sm mb-8">Regístrate para empezar a usar la plataforma</p>
+<section
+  class="min-h-screen bg-slate-950 text-white flex items-center justify-center px-4 py-10"
+>
 
-    <form autocomplete="off" class="flex flex-col gap-5">
-      
+  <div
+    class="w-full max-w-md bg-slate-900 border border-slate-800 rounded-2xl p-8 shadow-2xl"
+  >
+
+    <h1 class="text-3xl font-black text-center">
+      Crear
+      <span class="text-pink-400">
+        cuenta
+      </span>
+    </h1>
+
+    <p class="text-slate-400 text-center text-sm mt-2 mb-8">
+      Regístrate para enviar solicitudes
+    </p>
+
+    <form
+      #registerForm="ngForm"
+      (ngSubmit)="onRegister(registerForm)"
+      novalidate
+      class="space-y-5"
+    >
+
+      <!-- CORREO -->
       <div>
-        <label class="block text-sm font-medium text-slate-300 mb-2">Correo Electrónico</label>
-        <input 
-          type="email" 
-          [(ngModel)]="email" 
-          name="email" 
+
+        <label
+          for="registerEmail"
+          class="block text-sm text-slate-300 mb-2"
+        >
+          Correo electrónico
+        </label>
+
+        <input
+          id="registerEmail"
+          name="email"
+          type="email"
+          [(ngModel)]="email"
+          #emailInput="ngModel"
+          (input)="limpiarError()"
           required
-          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none"
-          placeholder="ejemplo@correo.com">
+          email
+          autocomplete="email"
+          placeholder="usuario@correo.com"
+          class="w-full bg-slate-950 border rounded-xl px-4 py-3 outline-none transition"
+          [ngClass]="
+            emailInput.invalid &&
+            (emailInput.touched || formularioEnviado)
+              ? 'border-red-500'
+              : 'border-slate-700 focus:border-pink-500'
+          "
+        >
+
+        <div
+          *ngIf="
+            emailInput.invalid &&
+            (emailInput.touched || formularioEnviado)
+          "
+          class="text-red-400 text-sm mt-2"
+        >
+
+          <p *ngIf="emailInput.errors?.['required']">
+            El correo es obligatorio.
+          </p>
+
+          <p *ngIf="emailInput.errors?.['email']">
+            Ingresa un correo electrónico válido.
+          </p>
+
+        </div>
+
       </div>
 
+
+      <!-- CONTRASEÑA -->
       <div>
-        <label class="block text-sm font-medium text-slate-300 mb-2">Contraseña</label>
-        <input 
-          type="password" 
-          [(ngModel)]="password" 
-          name="password" 
+
+        <label
+          for="registerPassword"
+          class="block text-sm text-slate-300 mb-2"
+        >
+          Contraseña
+        </label>
+
+        <input
+          id="registerPassword"
+          name="password"
+          type="password"
+          [(ngModel)]="password"
+          #passwordInput="ngModel"
+          (input)="limpiarError()"
           required
-          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none"
-          placeholder="Mínimo 6 caracteres">
+          minlength="6"
+          autocomplete="new-password"
+          placeholder="Mínimo 6 caracteres"
+          class="w-full bg-slate-950 border rounded-xl px-4 py-3 outline-none transition"
+          [ngClass]="
+            passwordInput.invalid &&
+            (passwordInput.touched || formularioEnviado)
+              ? 'border-red-500'
+              : 'border-slate-700 focus:border-pink-500'
+          "
+        >
+
+        <div
+          *ngIf="
+            passwordInput.invalid &&
+            (passwordInput.touched || formularioEnviado)
+          "
+          class="text-red-400 text-sm mt-2"
+        >
+
+          <p *ngIf="passwordInput.errors?.['required']">
+            La contraseña es obligatoria.
+          </p>
+
+          <p *ngIf="passwordInput.errors?.['minlength']">
+            Debe contener al menos 6 caracteres.
+          </p>
+
+        </div>
+
       </div>
 
+
+      <!-- CONFIRMAR CONTRASEÑA -->
       <div>
-        <label class="block text-sm font-medium text-slate-300 mb-2">Confirmar Contraseña</label>
-        <input 
-          type="password" 
-          [(ngModel)]="confirmPassword" 
-          name="confirmPassword" 
+
+        <label
+          for="confirmarPassword"
+          class="block text-sm text-slate-300 mb-2"
+        >
+          Confirmar contraseña
+        </label>
+
+        <input
+          id="confirmarPassword"
+          name="confirmarPassword"
+          type="password"
+          [(ngModel)]="confirmarPassword"
+          #confirmarInput="ngModel"
+          (input)="limpiarError()"
           required
-          class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-white focus:outline-none"
-          placeholder="Repite tu contraseña">
+          autocomplete="new-password"
+          placeholder="Repite tu contraseña"
+          class="w-full bg-slate-950 border rounded-xl px-4 py-3 outline-none transition"
+          [ngClass]="
+            (
+              confirmarInput.invalid ||
+              passwordsNoCoinciden
+            ) &&
+            (
+              confirmarInput.touched ||
+              formularioEnviado
+            )
+              ? 'border-red-500'
+              : 'border-slate-700 focus:border-pink-500'
+          "
+        >
+
+        <div
+          *ngIf="
+            (
+              confirmarInput.invalid ||
+              passwordsNoCoinciden
+            ) &&
+            (
+              confirmarInput.touched ||
+              formularioEnviado
+            )
+          "
+          class="text-red-400 text-sm mt-2"
+        >
+
+          <p *ngIf="confirmarInput.errors?.['required']">
+            Debes confirmar la contraseña.
+          </p>
+
+          <p
+            *ngIf="
+              !confirmarInput.errors?.['required'] &&
+              passwordsNoCoinciden
+            "
+          >
+            Las contraseñas no coinciden.
+          </p>
+
+        </div>
+
       </div>
 
-      <button 
-        type="button" 
-        (click)="onRegister()" 
-        class="w-full bg-pink-500 hover:bg-pink-400 font-semibold py-3 rounded-xl transition mt-2">
-        Registrarse
+
+      <div
+        *ngIf="mensajeError"
+        class="bg-red-500/10 border border-red-500/30 text-red-400 rounded-xl p-3 text-sm"
+      >
+        {{ mensajeError }}
+      </div>
+
+
+      <button
+        type="submit"
+        [disabled]="cargando"
+        class="w-full bg-pink-500 hover:bg-pink-400 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl py-3 font-semibold transition"
+      >
+        {{ cargando ? 'Creando cuenta...' : 'Registrarse' }}
       </button>
+
     </form>
 
     <p class="mt-6 text-center text-sm text-slate-400">
-      ¿Ya tienes una cuenta? <a routerLink="/login" class="text-pink-400 hover:underline">Inicia sesión aquí</a>
+      ¿Ya tienes una cuenta?
+
+      <a
+        routerLink="/login"
+        class="text-pink-400 hover:underline"
+      >
+        Inicia sesión
+      </a>
     </p>
+
   </div>
+
 </section>

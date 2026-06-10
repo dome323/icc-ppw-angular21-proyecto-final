@@ -1,20 +1,6 @@
 import { Injectable } from '@angular/core';
-
-import {
-  getApp,
-  getApps,
-  initializeApp
-} from 'firebase/app';
-
-import {
-  addDoc,
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  serverTimestamp,
-  where
-} from 'firebase/firestore';
+import {getApp,getApps,initializeApp} from 'firebase/app';
+import {addDoc,collection,getDocs,getFirestore,query,serverTimestamp,where, doc,updateDoc} from 'firebase/firestore';
 import { environment } from '../../../../enviroments/environment';
 
 
@@ -72,4 +58,51 @@ export class SolicitudesService {
 
     return solicitudes;
   }
+
+    async getSolicitudesRecibidas(programadorSlug: string) {
+
+      const consulta = query(
+        collection(this.db, 'solicitudes'),
+        where(
+          'programadorSlug',
+          '==',
+          programadorSlug
+        )
+      );
+
+      const snapshot = await getDocs(consulta);
+
+      const solicitudes = snapshot.docs.map(documento => ({
+        id: documento.id,
+        ...documento.data()
+      })) as any[];
+
+      solicitudes.sort((a, b) => {
+        const fechaA = a.fecha?.toMillis?.() ?? 0;
+        const fechaB = b.fecha?.toMillis?.() ?? 0;
+
+        return fechaB - fechaA;
+      });
+
+      return solicitudes;
+    }
+
+    async responderSolicitud(
+      solicitudId: string,
+      respuesta: string
+    ) {
+
+      const referencia = doc(
+        this.db,
+        'solicitudes',
+        solicitudId
+      );
+
+      return await updateDoc(referencia, {
+        respuesta: respuesta.trim(),
+        estado: 'respondida',
+        fechaRespuesta: serverTimestamp()
+      });
+    }
+
 }

@@ -1,0 +1,199 @@
+<app-header></app-header>
+
+<section class="min-h-screen bg-slate-950 text-white px-6 py-20">
+
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-12">
+
+      <p
+        class="inline-block rounded-full border border-pink-400/30 bg-pink-400/10 px-4 py-2 text-sm text-pink-300"
+      >
+        Panel del programador
+      </p>
+
+      <h1 class="text-4xl md:text-5xl font-black mt-5">
+        Solicitudes
+        <span class="text-pink-400">
+          recibidas
+        </span>
+      </h1>
+
+      <p
+        *ngIf="programador"
+        class="text-slate-400 mt-4"
+      >
+        Solicitudes dirigidas a
+        {{ programador.nombre }}
+      </p>
+
+    </div>
+
+
+    <div
+      *ngIf="cargando"
+      class="text-center text-slate-400 py-16"
+    >
+      Cargando solicitudes...
+    </div>
+
+
+    <div
+      *ngIf="!cargando && noEsProgramador"
+      class="max-w-2xl mx-auto bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 rounded-3xl p-8 text-center"
+    >
+      <h2 class="text-2xl font-bold">
+        Esta cuenta no pertenece a un programador
+      </h2>
+
+      <p class="mt-4">
+        Debes iniciar sesión con el mismo correo
+        registrado en Strapi.
+      </p>
+
+      <a
+        routerLink="/"
+        class="inline-block mt-6 bg-slate-800 px-5 py-3 rounded-xl"
+      >
+        Volver al inicio
+      </a>
+    </div>
+
+
+    <div
+      *ngIf="!cargando && mensajeError"
+      class="max-w-2xl mx-auto bg-red-500/10 border border-red-500/30 text-red-400 rounded-2xl p-6 text-center"
+    >
+      {{ mensajeError }}
+    </div>
+
+
+    <div
+      *ngIf="
+        !cargando &&
+        !mensajeError &&
+        !noEsProgramador &&
+        solicitudes.length === 0
+      "
+      class="max-w-2xl mx-auto bg-slate-900 border border-slate-800 rounded-3xl p-10 text-center"
+    >
+      <h2 class="text-2xl font-bold">
+        No tienes solicitudes recibidas
+      </h2>
+
+      <p class="text-slate-400 mt-4">
+        Las solicitudes enviadas a tu perfil
+        aparecerán aquí.
+      </p>
+    </div>
+
+
+    <div
+      *ngIf="
+        !cargando &&
+        !mensajeError &&
+        !noEsProgramador &&
+        solicitudes.length > 0
+      "
+      class="grid grid-cols-1 lg:grid-cols-2 gap-8"
+    >
+
+      <article
+        *ngFor="let solicitud of solicitudes"
+        class="bg-slate-900 border border-slate-800 rounded-3xl p-7"
+      >
+
+        <div class="flex justify-between gap-4 items-start">
+
+          <div>
+            <p class="text-sm text-slate-500">
+              Solicitud de
+            </p>
+
+            <h2 class="text-2xl font-bold mt-1">
+              {{ solicitud.nombre }}
+            </h2>
+
+            <p class="text-slate-400 text-sm mt-1">
+              {{ solicitud.correo }}
+            </p>
+          </div>
+
+          <span
+            class="px-3 py-1 rounded-full text-xs font-semibold capitalize border"
+            [ngClass]="
+              solicitud.estado === 'respondida'
+                ? 'bg-green-500/10 text-green-400 border-green-500/30'
+                : 'bg-yellow-500/10 text-yellow-400 border-yellow-500/30'
+            "
+          >
+            {{ solicitud.estado }}
+          </span>
+
+        </div>
+
+
+        <div class="mt-6">
+
+          <p class="text-sm text-slate-500">
+            Descripción del proyecto
+          </p>
+
+          <p class="text-slate-300 mt-2 leading-relaxed">
+            {{ solicitud.descripcion }}
+          </p>
+
+        </div>
+
+
+        <div class="mt-6">
+
+          <label
+            class="block text-sm text-slate-400 mb-2"
+          >
+            Respuesta u observación
+          </label>
+
+          <textarea
+            [(ngModel)]="solicitud.respuestaTemporal"
+            [name]="'respuesta-' + solicitud.id"
+            rows="4"
+            class="w-full bg-slate-950 border border-slate-700 rounded-xl px-4 py-3 resize-none focus:outline-none focus:border-pink-500"
+            placeholder="Escribe una respuesta para el solicitante..."
+          ></textarea>
+
+        </div>
+
+
+        <button
+          type="button"
+          (click)="guardarRespuesta(solicitud)"
+          [disabled]="solicitud.guardando"
+          class="w-full mt-5 bg-pink-500 hover:bg-pink-400 disabled:opacity-50 disabled:cursor-not-allowed px-5 py-3 rounded-xl font-semibold transition"
+        >
+          {{
+            solicitud.guardando
+              ? 'Guardando...'
+              : 'Guardar respuesta'
+          }}
+        </button>
+
+
+        <div class="mt-6 pt-5 border-t border-slate-800">
+
+          <p class="text-xs text-slate-500">
+            Recibida el
+            {{ formatearFecha(solicitud.fecha) }}
+          </p>
+
+        </div>
+
+      </article>
+
+    </div>
+
+  </div>
+
+</section>
+
+<app-footer></app-footer>

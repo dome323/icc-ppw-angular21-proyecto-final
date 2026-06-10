@@ -39,7 +39,9 @@ export class ProgramadorDetailPageComponent implements OnInit {
 
     this.programador = response.data[0];
 
-    console.log(this.programador);
+  console.log(
+  JSON.stringify(this.programador, null, 2)
+);
 
     this.cd.detectChanges();
 
