@@ -1,19 +1,45 @@
 <app-header></app-header>
 
-<section class="projects-shell min-h-screen py-20 px-6 overflow-hidden">
+<section
+  class="projects-shell min-h-screen py-20 px-6 overflow-hidden"
+>
   <div class="projects-glow"></div>
 
   <div class="max-w-7xl mx-auto relative">
+
     <header class="projects-hero text-center mb-12">
-      <span class="projects-label">{{ 'projects.section' | transloco }}</span>
-      <h2 class="projects-title">{{ 'projects.title' | transloco }}</h2>
+
+      <span class="projects-label">
+        {{ 'projects.section' | transloco }}
+      </span>
+
+      <h1 class="projects-title">
+        {{ 'projects.title' | transloco }}
+      </h1>
+
       <div class="projects-meta">
-        <span class="meta-pill active">{{ 'projects.meta.showing' | transloco: { current: filteredProyectos.length, total: totalProyectos } }}</span>
-        <span class="meta-pill">{{ 'projects.meta.all' | transloco }}</span>
+
+        <span class="meta-pill active">
+          {{
+            'projects.meta.showing'
+              | transloco: {
+                  current: filteredProyectos.length,
+                  total: totalProyectos
+                }
+          }}
+        </span>
+
+        <span class="meta-pill">
+          {{ 'projects.meta.all' | transloco }}
+        </span>
+
       </div>
+
     </header>
 
+
     <div class="filter-pills mb-10">
+
       <button
         *ngFor="let filtro of filtros"
         type="button"
@@ -21,47 +47,115 @@
         [class.active]="selectedFilter === filtro"
         (click)="applyFilter(filtro)"
       >
-        {{ filtro === 'Todos' ? ('projects.filter.all' | transloco) : filtro }}
+        {{
+          filtro === 'todos'
+            ? ('projects.filter.all' | transloco)
+            : (filtro | titlecase)
+        }}
       </button>
+
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+    >
+
       <a
         *ngFor="let proyecto of filteredProyectos"
-        [routerLink]="['/proyectos', proyecto.slug]"
+        [routerLink]="[
+          '/proyectos',
+          proyecto.slug
+        ]"
         class="project-card group"
       >
+
         <div class="card-glow"></div>
         <div class="card-shimmer"></div>
 
+
         <div class="project-image-frame">
-          <img
-            [src]="'http://localhost:1337' + (proyecto.imagen?.[0]?.url || '')"
-            [alt]="proyecto.nombre"
-            class="project-image"
-          />
-          <span *ngIf="proyecto.destacado" class="badge-featured">{{ 'projects.featured' | transloco }}</span>
+
+            <img
+              *ngIf="mediaUrl.get(proyecto.imagen)"
+              [src]="mediaUrl.get(proyecto.imagen)"
+              [alt]="'Imagen del proyecto ' + proyecto.nombre"
+            >
+
+          <div
+            *ngIf="!mediaUrl.get(proyecto.imagen)"
+            class="w-full h-full min-h-52 flex items-center justify-center bg-slate-900 text-slate-500"
+          >
+            Sin imagen
+          </div>
+
+          <span
+            *ngIf="proyecto.destacado"
+            class="badge-featured"
+          >
+            {{ 'projects.featured' | transloco }}
+          </span>
+
         </div>
+
 
         <div class="project-card-body">
+
           <div class="project-head">
-            <h3>{{ proyecto.nombre }}</h3>
-            <span *ngIf="proyecto.tipoProyecto" class="project-tag">{{ proyecto.tipoProyecto }}</span>
+
+            <h2>
+              {{ proyecto.nombre }}
+            </h2>
+
+            <span
+              *ngIf="proyecto.tipoProyecto"
+              class="project-tag"
+            >
+              {{ proyecto.tipoProyecto }}
+            </span>
+
           </div>
 
-          <p class="project-copy">{{ proyecto.descripcionBreve }}</p>
+
+          <p class="project-copy">
+            {{ proyecto.descripcionBreve }}
+          </p>
+
 
           <div class="project-tags">
-            <span *ngFor="let tag of getPreviewTags(proyecto)" class="tech-pill">{{ tag }}</span>
+
+            <span
+              *ngFor="
+                let tag of getPreviewTags(
+                  proyecto.tecnologias
+                )
+              "
+              class="tech-pill"
+            >
+              {{ tag }}
+            </span>
+
           </div>
 
+
           <div class="project-cta">
-            <span class="cta-pill">{{ 'projects.cta' | transloco }}</span>
-            <span class="cta-mini">{{ 'projects.details' | transloco }}</span>
+
+            <span class="cta-pill">
+              {{ 'projects.cta' | transloco }}
+            </span>
+
+            <span class="cta-mini">
+              {{ 'projects.details' | transloco }}
+            </span>
+
           </div>
+
         </div>
+
       </a>
+
     </div>
+
   </div>
 </section>
 
