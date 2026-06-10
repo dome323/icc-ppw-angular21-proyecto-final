@@ -8,6 +8,8 @@ import { ProgramadoresPageComponent } from './features/programadores/pages/progr
 import { ProgramadorDetailPageComponent } from './features/programadores/pages/programador-detail-page/programador-detail-page';
 import { ProjectDetailPageComponent } from './features/projects/pages/project-detail-page/project-detail-page';
 import { ServiciosPageComponent } from './features/servicios/pages/servicios-page/servicios-page';
+import { ContactPageComponent } from './features/contact/pages/contact-page/contact-page';
+import { MisSolicitudesPageComponent } from './features/solicitudes/pages/mis-solicitudes-page/mis-solicitudes-page';
 
 export const routes: Routes = [
 
@@ -25,6 +27,8 @@ export const routes: Routes = [
   
   { path: 'servicios', component: ServiciosPageComponent,canActivate: [authGuard] },
 
+  { path: 'contact',component: ContactPageComponent,canActivate: [authGuard]},
+  { path: 'mis-solicitudes',component: MisSolicitudesPageComponent,canActivate: [authGuard]},
   { path: '**', redirectTo: '' }
 
 ];

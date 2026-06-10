@@ -1,6 +1,19 @@
 import { Injectable } from '@angular/core';
-import { initializeApp } from 'firebase/app';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,signOut,onAuthStateChanged,User} from 'firebase/auth';
+import {
+  getApp,
+  getApps,
+  initializeApp
+} from 'firebase/app';
+
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  User
+} from 'firebase/auth';
+
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../../enviroments/environment';
 
@@ -8,10 +21,15 @@ import { environment } from '../../../../enviroments/environment';
   providedIn: 'root'
 })
 export class AuthService {
-  private app = initializeApp(environment.firebaseConfig);
+
+  private app = getApps().length
+    ? getApp()
+    : initializeApp(environment.firebaseConfig);
+
   private auth = getAuth(this.app);
 
-  private user$ = new BehaviorSubject<User | null>(null);
+  private user$ =
+    new BehaviorSubject<User | null>(null);
 
   constructor() {
     onAuthStateChanged(this.auth, (user) => {
@@ -19,25 +37,32 @@ export class AuthService {
     });
   }
 
-  // Lógica para iniciar sesión
   login(email: string, pass: string) {
-    return signInWithEmailAndPassword(this.auth, email, pass);
+    return signInWithEmailAndPassword(
+      this.auth,
+      email,
+      pass
+    );
   }
 
   register(email: string, pass: string) {
-    return createUserWithEmailAndPassword(this.auth, email, pass);
+    return createUserWithEmailAndPassword(
+      this.auth,
+      email,
+      pass
+    );
   }
 
-  // Lógica para cerrar sesión
   logout() {
-  return signOut(this.auth);
-}
+    return signOut(this.auth);
+  }
 
-get currentUser$(): Observable<User | null> {
-  return this.user$.asObservable();
-}
+  get currentUser$(): Observable<User | null> {
+    return this.user$.asObservable();
+  }
 
-getCurrentUser() {
-  return this.auth.currentUser;
-}
+  async getCurrentUser(): Promise<User | null> {
+    await this.auth.authStateReady();
+    return this.auth.currentUser;
+  }
 }
