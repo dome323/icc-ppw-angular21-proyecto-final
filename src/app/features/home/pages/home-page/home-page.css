@@ -499,3 +499,56 @@
     padding: 1.5rem;
   }
 }
+
+.home-shell,
+.home-hero,
+.home-hero__content,
+.home-section,
+.cards-grid,
+.home-team-layout,
+.stats-grid {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+.home-hero__glow,
+.home-hero__backdrop,
+.home-hero__lines {
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+@media (max-width: 768px) {
+  .home-hero {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .hero-title {
+    max-width: 100%;
+    font-size: clamp(2.4rem, 12vw, 3.4rem);
+    overflow-wrap: anywhere;
+  }
+
+  .hero-copy {
+    max-width: 100%;
+  }
+
+  .hero-actions {
+    width: 100%;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hover-panel,
+  .feature-card,
+  .stat-card {
+    max-width: 100%;
+  }
+}
